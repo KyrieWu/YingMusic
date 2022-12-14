@@ -72,7 +72,7 @@ export const routes: Array<RouteRecordRaw> = [
     {
         path: '/library',
         name: 'library',
-        component: () => import(/*webpackChunkNmae:"library"*/'../views/library.vue'),
+        component: () => import(/*webpackChunkNmae:"library"*/'../views/Library.vue'),
         beforeEnter: (to, from, next) => {
             if (store.state.isLogin || store.state.token || getToken()) {
                 next()
