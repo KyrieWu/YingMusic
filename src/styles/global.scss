@@ -48,7 +48,7 @@
   --html-overflow-y: overlay;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   --color-body-bg: #222222;
   --color-text: #ffffff;
   --color-primary: #335eea;
@@ -62,7 +62,7 @@
 
 #app,
 input {
-  font-family: 'Barlow', ui-sans-serif, system-ui, -apple-system,
+  font-family: "Barlow", ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei,
     Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif,
     microsoft uighur;
@@ -109,8 +109,7 @@ a {
   }
 }
 
-[data-electron='yes'] {
-
+[data-electron="yes"] {
   button,
   .navigation-links a,
   .playlist-info .description {
@@ -134,7 +133,7 @@ a {
   background: rgba(128, 128, 128, 0.38);
 }
 
-[data-theme='dark'] ::-webkit-scrollbar-thumb {
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
   background: var(--color-secondary-bg);
 }
 
@@ -142,7 +141,7 @@ a {
   user-select: none;
 }
 
-@media (max-width:1324px) {
+@media (max-width: 1324px) {
   body {
     min-width: 1000px;
   }

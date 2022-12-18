@@ -5,7 +5,7 @@
         "src/*"
       ]
     },
-    "baseUrl": ".",
+    "baseUrl": "./",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",

@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <banner></banner>
-    <daily-recommend v-if="store.state.isLogin"></daily-recommend>
-    <rec-play-list></rec-play-list>
-    <rec-artists></rec-artists>
-    <rec-new-album-list></rec-new-album-list>
-    <rec-top-list></rec-top-list>
-    <rec-m-v-list></rec-m-v-list>
+    <banner />
+    <daily-recommend v-if="store.state.isLogin" />
+    <rec-play-list />
+    <rec-artists />
+    <rec-new-album-list />
+    <rec-top-list />
+    <rec-m-v-list />
   </div>
 </template>
 

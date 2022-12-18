@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import nprogress from 'nprogress'
-import '@/assets/css/nprogress.css'
 import { getToken } from '@/utils/token'
 
 nprogress.configure({ showSpinner: false, trickleSpeed: 100 });
@@ -19,12 +18,12 @@ service.interceptors.request.use((config: AxiosRequestConfig) => {
         config.headers.token = getToken()
     }
 
-    nprogress.start()
+    //nprogress.start()
     return config
 })
 
 service.interceptors.response.use((res: AxiosResponse) => {
-    nprogress.done()
+    // nprogress.done()
     return res.data
 }, err => {
     return Promise.reject(err)

@@ -22,7 +22,7 @@ import MessageItem from "./components/Message/MessageItem.vue";
 const store = useStore();
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #app {
   margin: 0;
   padding: 0;

@@ -116,7 +116,7 @@ name: "PlayListDetail";
 <script setup lang="ts">
 import { getSongListInfo, getRelatedPlayList } from "@/api/PlayList";
 import { useRoute, useRouter } from "vue-router";
-import { onBeforeMount, onMounted, ref, watch, onUpdated } from "vue";
+import { onMounted, ref } from "vue";
 import { SongInfo } from "@/types/SongInfo";
 import { timestampToTime } from "@/utils/utils";
 import { useStore } from "vuex";
@@ -125,6 +125,7 @@ import SquareItemList from "@/components/SquareItemList.vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { Songlist } from "@/types/SongList";
 import { ReccategoryPlaylistInfo } from "@/types/RecPlayList";
+import NProgress from 'nprogress'
 
 interface relatedPlaylist {
   code: 200;
@@ -180,6 +181,7 @@ const playAllSong = (songs: SongInfo[]): void => {
 
 const getsongLists = async (id: number) => {
   let res = (await getSongListInfo(id)) as unknown as Songlist;
+  NProgress.done()
   playListData.value = res.playlist;
   trackInfos.value = [];
   playListData.value.tracks.slice(0, 10).forEach((item: SongInfo) => {
@@ -204,6 +206,7 @@ const getrelatedPlayLists = async (id: number) => {
 };
 
 onMounted(() => {
+  NProgress.start();
   getsongLists(Number(route.query.id));
   getrelatedPlayLists(Number(route.query.id));
 
@@ -223,6 +226,7 @@ onMounted(() => {
 
 onBeforeRouteUpdate((to, from) => {
   if (to.query.id !== from.query.id) {
+    NProgress.start();
     getsongLists(Number(to.query.id));
     getrelatedPlayLists(Number(to.query.id));
 
