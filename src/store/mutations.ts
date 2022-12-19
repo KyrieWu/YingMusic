@@ -1,9 +1,5 @@
-import { BannerInfo } from '../types/banners'
 import { IState } from './state'
-import { SongInfo } from '@/types/songInfo'
-import { CatePlayListInfo } from "@/types/CatePlayList"
 import { setToken, removeToken } from '@/utils/token'
-import { Profile } from '@/types/login'
 
 export default {
     GETBANNER(state: IState, banners: BannerInfo[]) {

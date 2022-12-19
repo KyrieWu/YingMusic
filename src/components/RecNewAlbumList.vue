@@ -23,10 +23,8 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref, watch, reactive, toRefs } from 'vue'
-import { getNewAlbum } from '../api/home'
-import { Album, AlbumInfo } from '../types/Album'
-import { SquareItemProps } from '@/types/SquareItemProps'
+import { onBeforeMount, ref, watch } from 'vue'
+import { getNewAlbum } from '@/api/home'
 import SquareItemList from '@/components/SquareItemList.vue'
 
 interface AlbumArea {
@@ -48,7 +46,7 @@ let squareItems = ref<SquareItemProps[]>([])
 
 
 let getAltums = async () => {
-  let result = await getNewAlbum(area.value, 10, 0) as unknown as Album;
+  let result = await getNewAlbum(area.value, 10, 0);
   PlayListData.value = result.albums
   squareItems.value = []
   PlayListData.value.forEach(item => {

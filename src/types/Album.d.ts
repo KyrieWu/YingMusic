@@ -1,10 +1,10 @@
-export interface Album {
+interface Album {
     albums: AlbumInfo[]
     code: number
     total: number
 }
 
-export interface AlbumInfo {
+interface AlbumInfo {
     alias: string[]
     artist: Artist
     artists: Artist[]

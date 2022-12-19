@@ -17,7 +17,6 @@ import { getArtistMV } from "@/api/mv";
 import { onBeforeMount, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import LazyMore from "@/components/LazyMore.vue";
-import { ArtistMvInfo } from "@/types/MVInfo";
 
 interface ArtistMv {
   code: number;

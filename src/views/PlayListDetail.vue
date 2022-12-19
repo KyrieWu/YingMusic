@@ -117,14 +117,10 @@ name: "PlayListDetail";
 import { getSongListInfo, getRelatedPlayList } from "@/api/PlayList";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
-import { SongInfo } from "@/types/SongInfo";
 import { timestampToTime } from "@/utils/utils";
 import { useStore } from "vuex";
-import { SquareItemProps } from "@/types/SquareItemProps";
 import SquareItemList from "@/components/SquareItemList.vue";
 import { onBeforeRouteUpdate } from "vue-router";
-import { Songlist } from "@/types/SongList";
-import { ReccategoryPlaylistInfo } from "@/types/RecPlayList";
 import NProgress from 'nprogress'
 
 interface relatedPlaylist {

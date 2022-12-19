@@ -1,10 +1,10 @@
-export interface SongData {
+interface SongData {
     code: number
     privileges: []
     songs: SongInfo[]
 }
 
-export interface SongInfo {
+interface SongInfo {
     a: null
     al: AlInfo
     alia: []
@@ -70,7 +70,7 @@ interface AlInfo {
     tns?: string[]
 }
 
-export interface CheckMusic {
+interface CheckMusic {
     success: boolean,
     message: string
 }

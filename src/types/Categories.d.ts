@@ -1,11 +1,11 @@
-export interface Categories {
+interface Categories {
     all: object,
     categories: object,
     code: number,
     sub: CategorieInfo[]
 }
 
-export interface CategorieInfo {
+interface CategorieInfo {
     activity: boolean,
     category: number,
     hot: boolean,

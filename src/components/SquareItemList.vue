@@ -38,14 +38,10 @@ name: "SquareItemList";
 </script>
 <script setup lang="ts">
 import { timestampToDate } from "@/utils/utils";
-import { SquareItemProps } from "@/types/SquareItemProps";
-import { AlbumInfo } from '@/types/Album'
-import { SongInfo } from "@/types/SongInfo";
 import { getSongListInfo } from "@/api/PlayList";
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 import { getAltumDetail } from "@/api/altum";
-import { Songlist } from '@/types/SongList'
 
 interface AltumDetail {
   album: AlbumInfo,

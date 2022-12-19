@@ -1,9 +1,4 @@
-import { SongInfo } from './songInfo'
-import { AlbumInfo } from './album'
-import { ArtistsInfo } from './aritsts'
-import { MVInfo } from './MVInfo'
-
-export interface Search {
+interface Search {
     code: number
     result: Result
 }

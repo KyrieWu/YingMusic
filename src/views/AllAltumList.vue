@@ -27,10 +27,8 @@ name: "AllMVLList";
 <script setup lang="ts">
 import { getNewAlbum } from "@/api/home";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
-import { SquareItemProps } from "@/types/SquareItemProps";
 import SquareItemList from "@/components/SquareItemList.vue";
 import LazyMore from "@/components/LazyMore.vue";
-import { AlbumInfo } from "@/types/Album";
 
 interface AlbumArea {
   ALL: string;

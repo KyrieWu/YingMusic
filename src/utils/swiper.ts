@@ -1,4 +1,3 @@
-import { BannerInfo, Banners } from '../types/banners'
 import { Ref } from 'vue'
 
 /**

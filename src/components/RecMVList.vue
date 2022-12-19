@@ -21,9 +21,8 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref, watch } from 'vue'
-import { getMVList } from '../api/home'
-import { MVData, MVInfo } from '../types/MVInfo'
+import { onBeforeMount, ref, watch } from 'vue'
+import { getMVList } from '@/api/home'
 import MVItem, { MVProps } from '@/components/MVItem.vue'
 
 let navList = ref(['内地', '港台', '欧美', '韩国', '日本'])
@@ -37,7 +36,7 @@ watch(() => mvType.value, () => {
 })
 
 const getRecMV = async () => {
-  let result = await getMVList(mvType.value) as unknown as MVData;
+  let result = await getMVList(mvType.value);
   mvDatas.value = result.data;
   mvList.value = []
   mvDatas.value.forEach(item => {

@@ -1,4 +1,4 @@
-export interface Login {
+interface Login {
     account: Account;
     bindings: any[];
     code: number;
@@ -8,7 +8,7 @@ export interface Login {
     token: string;
 }
 
-export interface Profile {
+interface Profile {
     accountStatus: number;
     authStatus: number;
     authority: number;

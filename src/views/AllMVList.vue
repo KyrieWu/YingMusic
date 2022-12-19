@@ -6,20 +6,10 @@
           <div class="categories">地区</div>
           <div class="categories-list">
             <div class="item">
-              <a
-                class="item_name"
-                :class="{ active: area === '' }"
-                @click="area = ''"
-                >热门</a
-              >
+              <a class="item_name" :class="{ active: area === '' }" @click="area = ''">热门</a>
             </div>
             <div class="item" v-for="(item, index) in mvArea" :key="index">
-              <a
-                class="item_name"
-                :class="{ active: area === `${item}` }"
-                @click="area = `${item}`"
-                >{{ item }}</a
-              >
+              <a class="item_name" :class="{ active: area === `${item}` }" @click="area = `${item}`">{{ item }}</a>
             </div>
           </div>
         </div>
@@ -29,20 +19,10 @@
           <div class="categories">分类</div>
           <div class="categories-list">
             <div class="item">
-              <a
-                class="item_name"
-                :class="{ active: type === '' }"
-                @click="type = ''"
-                >热门</a
-              >
+              <a class="item_name" :class="{ active: type === '' }" @click="type = ''">热门</a>
             </div>
             <div class="item" v-for="(item, index) in mvType" :key="index">
-              <a
-                class="item_name"
-                :class="{ active: type === `${item}` }"
-                @click="type = `${item}`"
-                >{{ item }}</a
-              >
+              <a class="item_name" :class="{ active: type === `${item}` }" @click="type = `${item}`">{{ item }}</a>
             </div>
           </div>
         </div>
@@ -51,13 +31,7 @@
         <div class="order" :class="{ active: order == '' }" @click="order = ''">
           上升最快
         </div>
-        <div
-          class="order"
-          :class="{ active: order == item }"
-          v-for="item in mvOrder"
-          :key="item"
-          @click="order = item"
-        >
+        <div class="order" :class="{ active: order == item }" v-for="item in mvOrder" :key="item" @click="order = item">
           {{ item }}
         </div>
       </div>
@@ -81,7 +55,6 @@ import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { mvArea, mvType, mvOrder } from "@/utils/mv";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
 import LazyMore from "@/components/LazyMore.vue";
-import { MVInfo } from "@/types/MVInfo";
 
 interface ALLMvResult {
   code: number;

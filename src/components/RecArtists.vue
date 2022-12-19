@@ -18,15 +18,14 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from 'vue'
-import { getRecArtists } from '../api/home'
-import { Artists, ArtistsInfo } from '../types/Aritsts'
+import { onBeforeMount, ref } from 'vue'
+import { getRecArtists } from '@/api/home'
 import AritstItem from '@/components/AritstItem.vue'
 
 let artistsInfos = ref<ArtistsInfo[]>([])
 
 onBeforeMount(async () => {
-  let res = await getRecArtists() as unknown as Artists;
+  let res = await getRecArtists();
   artistsInfos.value = res.artists
 })
 

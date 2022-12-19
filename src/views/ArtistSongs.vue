@@ -34,7 +34,6 @@ import { onBeforeMount, onMounted, ref } from "vue";
 import ArtistSongItem from "@/components/ArtistSongItem.vue";
 import LazyMore from "@/components/LazyMore.vue";
 import { useStore } from "vuex";
-import { SongInfo } from "@/types/SongInfo";
 
 interface HotSong {
   artist: object;

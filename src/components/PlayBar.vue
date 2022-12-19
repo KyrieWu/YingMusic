@@ -131,7 +131,6 @@ name: "PlayBar"; //
 import { watch, ref, reactive, toRefs, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 import { timestampToTime, uptateTime } from "@/utils/utils";
-import { SongInfo } from "@/types/SongInfo";
 import { useRouter } from "vue-router";
 import { sortLyric } from "@/utils/sortLyric";
 

@@ -21,8 +21,6 @@
 name: "ArtistItem";
 </script>
 <script setup lang="ts">
-import { Artists, ArtistsInfo } from "../types/Aritsts";
-
 const { artistsInfos } = defineProps<{ artistsInfos: ArtistsInfo[] }>();
 </script>
 

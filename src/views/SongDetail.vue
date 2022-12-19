@@ -66,12 +66,10 @@ name: "PlayList";
 </script>
 <script setup lang="ts">
 import { getLyric } from "@/api/track";
-import { useRoute, useRouter } from "vue-router";
-import { onBeforeMount, onMounted, ref } from "vue";
-import { SongInfo } from "@/types/SongInfo";
+import { useRoute } from "vue-router";
+import { onBeforeMount, ref } from "vue";
 import { sortLyric } from "@/utils/sortLyric";
 import { useStore } from "vuex";
-import { Lyric } from "@/types/Lyric";
 
 const store = useStore();
 const route = useRoute();

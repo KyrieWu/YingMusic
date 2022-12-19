@@ -1,6 +1,4 @@
-import { AlbumInfo } from './album'
-
-export interface PerosnFMInfo {
+interface PerosnFMInfo {
     album: AlbumInfo;
     alg: string;
     alias: any[];

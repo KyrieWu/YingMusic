@@ -1,11 +1,11 @@
-export interface RecPlayList {
+interface RecPlayList {
     category: number,
     code: number,
     hasTaste: boolean,
     result: PlayListInfo[]
 }
 
-export interface PlayListInfo {
+interface PlayListInfo {
     alg: string,
     canDislike: boolean,
     copywriter: string,
@@ -19,7 +19,7 @@ export interface PlayListInfo {
     type: number
 }
 
-export interface ReccategoryPlayList {
+interface ReccategoryPlayList {
     cat: string;
     code: number;
     more: boolean;
@@ -27,7 +27,7 @@ export interface ReccategoryPlayList {
     total: number;
 }
 
-export interface ReccategoryPlaylistInfo {
+interface ReccategoryPlaylistInfo {
     adType: number;
     alg: string;
     anonimous: boolean;

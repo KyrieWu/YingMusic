@@ -102,7 +102,6 @@ name: "PlayListDetail";
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
 import { onBeforeMount, onMounted, ref, watch, onUpdated, computed } from "vue";
-import { SongInfo } from "@/types/SongInfo";
 import { timestampToTime } from "@/utils/utils";
 import { useStore } from "vuex";
 

@@ -1,29 +1,19 @@
 <template>
   <div class="mv_container">
     <div class="mv_video">
-      <video
-        width="1276"
-        height="718"
-        class="video"
-        :src="mvUrl.url"
-        controls
-      ></video>
+      <video width="1276" height="718" class="video" :src="mvUrl.url" controls></video>
     </div>
     <div class="mv_info">
       <div class="mv_name">
-        <router-link
-          :to="{ path: '/artistDetail', query: { id: mvDetail.artistId } }"
-          >{{ mvDetail.artistName }} </router-link
-        >&nbsp;—&nbsp;{{ mvDetail.name }}
+        <router-link :to="{ path: '/artistDetail', query: { id: mvDetail.artistId } }">{{ mvDetail.artistName }}
+        </router-link>&nbsp;—&nbsp;{{ mvDetail.name }}
         <div class="mv_icon" @click="toLikeMv">
           <i class="mv_like_icon" ref="mv_like_icon" title="收藏"></i>
         </div>
       </div>
 
       <div class="playCount">
-        <span
-          >播放量:&nbsp;{{ (mvDetail.playCount / 10000).toFixed(1) }}万</span
-        >
+        <span>播放量:&nbsp;{{ (mvDetail.playCount / 10000).toFixed(1) }}万</span>
         <span>发行时间:&nbsp;{{ mvDetail.publishTime }}</span>
       </div>
     </div>
@@ -38,13 +28,12 @@
 name: "MVDetail";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref, onUpdated } from "vue";
+import { onMounted, ref } from "vue";
 import { getMVUrl, getMVDetail, getArtistMV } from "@/api/mv";
 import { useRoute } from "vue-router";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "vuex";
-import { MVData, MVInfo, ArtistMvInfo } from "@/types/MVInfo";
 
 interface ArtistMv {
   code: number;

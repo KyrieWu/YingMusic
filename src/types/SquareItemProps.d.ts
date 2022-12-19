@@ -1,4 +1,4 @@
-export interface SquareItemProps {
+interface SquareItemProps {
     id: number,
     picUrl: string,
     name: string,

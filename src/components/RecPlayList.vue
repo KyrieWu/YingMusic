@@ -24,12 +24,9 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from 'vue'
-import { getRecPlayList, getReccategoryPlayList } from '../api/home'
-import { RecPlayList, PlayListInfo, ReccategoryPlayList, ReccategoryPlaylistInfo } from '../types/RecPlayList'
+import { onBeforeMount, ref } from 'vue'
+import { getRecPlayList, getReccategoryPlayList } from '@/api/home'
 import SquareItemList from '@/components/SquareItemList.vue'
-import { SquareItemProps } from '@/types/SquareItemProps'
-
 
 
 let PlayListData = ref<PlayListInfo[] | ReccategoryPlaylistInfo[]>([])
@@ -41,7 +38,7 @@ let squareItems = ref<SquareItemProps[]>([])
 
 
 const getcategoryPlayList = async (cat: string) => {
-  let result = await getReccategoryPlayList(10, cat, 0) as unknown as ReccategoryPlayList;
+  let result = await getReccategoryPlayList(10, cat, 0);
   PlayListData.value = result.playlists
   squareItems.value = []
   PlayListData.value.forEach(item => {
@@ -56,7 +53,7 @@ const getcategoryPlayList = async (cat: string) => {
 }
 
 const getPlayList = async () => {
-  let result = await getRecPlayList() as unknown as RecPlayList;
+  let result = await getRecPlayList();
   PlayListData.value = result.result;
   squareItems.value = []
   PlayListData.value.forEach(item => {

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted } from "vue";
+import { onBeforeMount } from "vue";
 import { getDjCatelist } from "@/api/dj";
 
 onBeforeMount(async () => {

@@ -1,22 +1,13 @@
 import { Commit, Dispatch } from "vuex";
-import { getBanner } from "../api/other";
-import { Banners } from "../types/banners";
+import { getBanner } from "@/api/home";
 import { checkMusic, getLyric, getSongDetail } from "@/api/track";
 import { IState } from "./state";
-import { CheckMusic, SongInfo } from "@/types/songInfo";
-import { CatePlayLists, CatePlayListInfo } from "@/types/CatePlayList";
 import { getReccategoryPlayList } from "@/api/home";
 import { search } from "@/api/search";
-import { Search } from "@/types/search";
 import { toLogin, getUserInfo, toLogout, checkCaptcha } from '@/api/login'
 import { getLikeSonglist, getUserAlbum, getUserArtlist, getUserMV, getUserPlaylist, subAlbum, subArtist, subMV, subPlaylist, likeSong } from '@/api/user'
 import { getDailyRecommendSongs } from '@/api/home'
 import Message from "@/components/Message/index";
-import { Lyric } from "@/types/lyric";
-import { Login, Profile } from '@/types/login'
-import { AlbumInfo } from '@/types/album'
-import { MVInfo } from '@/types/MVInfo';
-import { ArtistsInfo } from "@/types/aritsts";
 
 interface Logout {
     code: number
@@ -72,7 +63,7 @@ interface DailyRecommendSongs {
 
 export default {
     async getBanner({ commit, state }: { commit: Commit; state: IState }) {
-        let resault = (await getBanner()) as unknown as Banners;
+        let resault = await getBanner();
         if (resault.code == 200) {
             commit("GETBANNER", resault.banners);
         }

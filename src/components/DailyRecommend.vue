@@ -48,11 +48,9 @@ name: 'DailyRecommend'
 </script>
 <script setup lang="ts">
 import { onBeforeMount, ref, computed } from 'vue'
-import { getDailyRecommendSongs, getPersonalFm } from '@/api/home'
-import { SongInfo } from '@/types/SongInfo'
+import { getPersonalFm } from '@/api/home'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { PerosnFMInfo } from '@/types/PersonFM'
 
 interface PersonFM {
   code: number

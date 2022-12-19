@@ -1,8 +1,15 @@
 import service from "../utils/https";
 
+// 获得轮播图
+export function getBanner(): Promise<Banners> {
+    return service({
+        url: '/banner?type=0',
+        method: 'GET'
+    })
+}
 
 // get Recommend the playlist
-export function getRecPlayList() {
+export function getRecPlayList(): Promise<RecPlayList> {
     return service({
         url: '/personalized?limit=10',
         method: 'get'
@@ -11,7 +18,7 @@ export function getRecPlayList() {
 
 
 /// get recommend the artists
-export function getRecArtists() {
+export function getRecArtists(): Promise<Artists> {
     return service({
         url: '/top/artists?offset=0&limit=6',
         method: 'get'
@@ -19,7 +26,7 @@ export function getRecArtists() {
 }
 
 //get new album
-export function getNewAlbum(area: string, limit: number, offset: number) {
+export function getNewAlbum(area: string, limit: number, offset: number): Promise<Album> {
     return service({
         url: `/album/new?area=${area}&limit=${limit}&offset=${offset * limit}`,
         method: 'get'
@@ -27,20 +34,20 @@ export function getNewAlbum(area: string, limit: number, offset: number) {
 }
 
 //get toplist
-export function getTopList() {
+export function getTopList(): Promise<TopListData> {
     return service({
         url: '/toplist',
         method: 'get'
     })
 }
-export function getPlayListTrack(id: number, limit: number) {
+export function getPlayListTrack(id: number, limit: number): Promise<SongData> {
     return service({
         url: `/playlist/track/all?id=${id}&limit=${limit}&offset=0`,
         method: 'get'
     })
 }
 
-export function getMVList(area: string) {
+export function getMVList(area: string): Promise<MVData> {
     return service({
         url: `/mv/first?limit=10&area=${area}`,
         method: 'get'
@@ -48,7 +55,7 @@ export function getMVList(area: string) {
 }
 
 // Get the recommended category playlist
-export function getReccategoryPlayList(limit: number, cat: string, offset: number) {
+export function getReccategoryPlayList(limit: number, cat: string, offset: number): Promise<ReccategoryPlayList> {
     return service({
         url: `/top/playlist?limit=${limit}&cat=${cat}&offset=${offset * limit}`,
         method: 'get'

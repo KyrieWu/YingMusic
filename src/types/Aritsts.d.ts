@@ -1,10 +1,10 @@
-export interface Artists {
+interface Artists {
     artists: ArtistsInfo[],
     code: number,
     more: boolean
 }
 
-export interface ArtistsInfo {
+interface ArtistsInfo {
     accountId: number,
     albumSize: number,
     alg: null,

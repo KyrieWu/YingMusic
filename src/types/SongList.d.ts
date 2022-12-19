@@ -1,6 +1,4 @@
-import { ReccategoryPlaylistInfo } from './RecPlayList'
-
-export interface Songlist {
+interface Songlist {
     code: number;
     fromUserCount: number;
     fromUsers?: any;

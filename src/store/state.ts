@@ -1,8 +1,4 @@
-import { BannerInfo } from '../types/banners'
-import { SongInfo } from '@/types/songInfo'
-import { CatePlayListInfo } from "@/types/CatePlayList"
 import { getToken } from '@/utils/token'
-import { Profile } from '@/types/login'
 
 export interface IState {
     banners: BannerInfo[],

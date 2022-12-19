@@ -12,14 +12,12 @@
 name: "ArtistAlbums";
 </script>
 <script setup lang="ts">
-import { SquareItemProps } from "@/types/SquareItemProps";
 import SquareItemList from "@/components/SquareItemList.vue";
 import { getArtAlbum } from "@/api/altum";
 import { onBeforeMount, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import LazyMore from "@/components/LazyMore.vue";
-import { AlbumInfo } from "@/types/Album";
-import { ArtistsInfo } from "@/types/Aritsts";
+
 
 interface ArtAlbumResult {
   artist: ArtistsInfo;

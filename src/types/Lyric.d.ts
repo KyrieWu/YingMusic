@@ -1,4 +1,4 @@
-export interface Lyric {
+interface Lyric {
     code: number;
     klyric: Klyric;
     lrc: Klyric;

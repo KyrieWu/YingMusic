@@ -1,48 +1,44 @@
-export interface TopListData {
-    artistToplist: object,
+interface CatePlayLists {
+    cat: string,
     code: number,
-    list: TopListInfo[]
+    more: boolean,
+    playlists: CatePlayListInfo[],
+    total: number,
 }
 
-export interface TopListInfo {
-    ToplistType: string
+interface CatePlayListInfo {
     adType: number
+    alg: string
     anonimous: boolean
-    artists: null
-    backgroundCoverId: number
-    backgroundCoverUrl: string
     cloudTrackCount: number
+    commentCount: number
     commentThreadId: string
     coverImgId: number
-    coverImgId_str: string
     coverImgUrl: string
+    coverStatus: number
     createTime: number
-    creator: null
+    creator: object
     description: string
-    englishTitle: null
     highQuality: boolean
     id: number
     name: string
-    newImported: false
-    opRecommend: false
-    ordered: true
+    newImported: boolean
+    ordered: boolean
     playCount: number
     privacy: number
-    recommendInfo: null
+    recommendInfo?: string
+    shareCount: number
     specialType: number
     status: number
-    subscribed: null
+    subscribed: boolean
     subscribedCount: number
     subscribers: []
     tags: []
-    titleImage: number
-    titleImageUrl: null
     totalDuration: number
     trackCount: number
     trackNumberUpdateTime: number
     trackUpdateTime: number
-    tracks: null
-    updateFrequency: string
+    tracks: []
     updateTime: number
     userId: number
 }

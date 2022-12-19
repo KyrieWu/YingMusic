@@ -121,9 +121,7 @@ import SquareItemList from "@/components/SquareItemList.vue";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
 import AritstItem from "@/components/AritstItem.vue";
 import { timestampToTime } from "@/utils/utils";
-import { SquareItemProps } from "@/types/SquareItemProps";
 import Blankprompt from "@/components/Blankprompt.vue";
-import { SongInfo } from "@/types/SongInfo";
 
 const store = useStore();
 const router = useRouter();

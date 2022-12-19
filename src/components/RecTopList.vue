@@ -42,10 +42,8 @@
 name: "TopLIST";
 </script>
 <script setup lang="ts">
-import { getTopList, getPlayListTrack } from "../api/home";
-import { onBeforeMount, onMounted, ref, reactive, toRefs } from "vue";
-import { TopListData, TopListInfo } from "../types/TopLIst";
-import { SongData, SongInfo } from '../types/SongInfo'
+import { getTopList, getPlayListTrack } from "@/api/home";
+import { onBeforeMount, ref, reactive, toRefs } from "vue";
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -78,10 +76,10 @@ const toSongDetail = (item: SongInfo) => {
 };
 
 onBeforeMount(async () => {
-  let res = (await getTopList()) as unknown as TopListData;
+  let res = await getTopList();
   topListInfo.value = res.list.slice(0, 5);
   for (let i = 0; i < topListInfo.value.length; i++) {
-    let result = await getPlayListTrack(topListInfo.value[i].id, 20) as unknown as SongData;
+    let result = await getPlayListTrack(topListInfo.value[i].id, 20);
     topMusicList.value.set(topListInfo.value[i].name, result.songs);
   }
 });

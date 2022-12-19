@@ -42,7 +42,6 @@ export default {
 import { timestampToTime } from "@/utils/utils";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { SongInfo } from "@/types/SongInfo";
 
 const store = useStore();
 const router = useRouter();

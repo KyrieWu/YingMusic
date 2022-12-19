@@ -105,19 +105,14 @@ import {
   getSimitArtist,
 } from "@/api/artist";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
 import { getArtistMV } from "@/api/mv";
-import { SquareItemProps } from "@/types/SquareItemProps";
 import SquareItemList from "@/components/SquareItemList.vue";
 import { getArtAlbum } from "@/api/altum";
 import ArtistSongItem from "@/components/ArtistSongItem.vue";
 import AritstItem from "@/components/AritstItem.vue";
-import { Artists, ArtistsInfo } from "@/types/Aritsts";
-import { SongInfo } from "@/types/SongInfo";
-import { ArtistMvInfo } from "@/types/MVInfo";
-import { AlbumInfo } from "@/types/Album";
 
 interface HotSong {
   artist: object;

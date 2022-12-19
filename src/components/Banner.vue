@@ -25,9 +25,8 @@ name: "Banner";
 </script>
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
-import { Banners } from "../types/banners";
-import { Swiper } from "../utils/swiper";
-import { getBanner } from "../api/other";
+import { Swiper } from "@/utils/swiper";
+import { getBanner } from "@/api/home";
 
 const swipe = ref();
 const swipe_bg = ref();
@@ -50,9 +49,8 @@ const swiper = new Swiper({
 });
 
 onBeforeMount(async () => {
-  let bannerData = (await getBanner()) as unknown as Banners;
+  let bannerData = await getBanner();
   swiper.initData(bannerData.banners);
-  console.log(bannerData);
 });
 </script>
 
@@ -62,6 +60,7 @@ onBeforeMount(async () => {
     min-width: 1430px;
   }
 }
+
 .swipe {
   width: 100vw;
   height: 400px;
@@ -141,6 +140,7 @@ onBeforeMount(async () => {
   .btn.left {
     left: -10px;
   }
+
   .btn.right {
     right: -10px;
   }
@@ -150,6 +150,7 @@ onBeforeMount(async () => {
   .swipe .btn.left {
     left: 20px;
   }
+
   .swipe .btn.right {
     right: 20px;
   }

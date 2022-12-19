@@ -24,9 +24,8 @@
 name: "PlayListCategories";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { getPlayListCategory } from "@/api/PlayList";
-import { Categories, CategorieInfo } from "@/types/categories";
 import { useStore } from "vuex";
 
 interface Categorie {

@@ -1,9 +1,8 @@
-export interface Banners {
+interface Banners {
     banners: BannerInfo[],
     code: number
 }
-
-export interface BannerInfo {
+interface BannerInfo {
     adDispatchJson: null,
     adLocation: null,
     adSource: null,

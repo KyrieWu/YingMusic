@@ -107,11 +107,10 @@ name: "AltumDetail";
 <script setup lang="ts">
 import { getAltumDetail } from "@/api/altum";
 import { useRoute, useRouter } from "vue-router";
-import { onBeforeMount, onMounted, ref, reactive, toRefs } from "vue";
-import { SongInfo } from "@/types/SongInfo";
+import { onBeforeMount, ref, reactive, toRefs } from "vue";
 import { timestampToTime, timestampToDate } from "@/utils/utils";
 import { useStore } from "vuex";
-import { AlbumInfo } from "@/types/Album";
+
 
 interface AltumDetailResult {
   album: AlbumInfo;

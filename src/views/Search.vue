@@ -110,14 +110,12 @@ name: "SearchItem";
 <script setup lang="ts">
 import { useRoute, onBeforeRouteUpdate, useRouter } from "vue-router";
 import { ref, onBeforeMount, computed, watch } from "vue";
-import { SongInfo } from "@/types/SongInfo";
 import { useStore } from "vuex";
 import { SearchNav } from "@/utils/searchNav";
 import SquareItemList from "@/components/SquareItemList.vue";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
 import AritstItem from "@/components/AritstItem.vue";
 import { timestampToTime } from "@/utils/utils";
-import { SquareItemProps } from "@/types/SquareItemProps";
 
 const route = useRoute();
 const store = useStore();

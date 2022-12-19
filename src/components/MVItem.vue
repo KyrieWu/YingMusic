@@ -31,8 +31,6 @@
 name: "MVItem";
 </script>
 <script setup lang="ts">
-import { MVInfo } from "../types/MVInfo";
-
 export interface MVProps {
   id: number;
   name: string;

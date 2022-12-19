@@ -60,7 +60,6 @@ import {
   AreeKey,
 } from "@/utils/cateArtistInfo";
 import AritstItem from "@/components/AritstItem.vue";
-import { Artists, ArtistsInfo } from "../types/Aritsts";
 import LazyMore from "@/components/LazyMore.vue";
 
 let artistsInfos = ref<ArtistsInfo[]>([]);

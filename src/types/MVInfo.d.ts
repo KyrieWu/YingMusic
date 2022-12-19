@@ -1,9 +1,9 @@
-export interface MVData {
+interface MVData {
     code: number
     data: MVInfo[]
 }
 
-export interface MVInfo {
+interface MVInfo {
     artistId: number
     artistName: string
     artists: string[]
@@ -20,7 +20,7 @@ export interface MVInfo {
 }
 
 
-export interface ArtistMvInfo {
+interface ArtistMvInfo {
     artist: Artist;
     artistName: string;
     duration: number;

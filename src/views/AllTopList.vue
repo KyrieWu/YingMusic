@@ -115,9 +115,7 @@ name: "AllTopList";
 </script>
 <script setup lang="ts">
 import { getTopList, getPlayListTrack } from "../api/home";
-import { onBeforeMount, onMounted, ref, watch } from "vue";
-import { TopListData, TopListInfo } from "../types/TopLIst";
-import { SongData, SongInfo } from "../types/SongInfo";
+import { onBeforeMount, ref, watch } from "vue";
 import { timestampToDate, timestampToTime } from "@/utils/utils";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
