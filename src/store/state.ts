@@ -25,7 +25,10 @@ export interface IState {
     likeAlbumlist: any[],
     likeMVlist: any[],
     likeArtistlist: any[],
-    dailyRecommendSongs: SongInfo[]
+    dailyRecommendSongs: SongInfo[],
+    setting: {
+        lang: string
+    }
 }
 
 
@@ -54,5 +57,8 @@ export default {
     likeAlbumlist: [],
     likeMVlist: [],
     likeArtistlist: [],
-    dailyRecommendSongs: [] as SongInfo[]
+    dailyRecommendSongs: [] as SongInfo[],
+    setting: {
+        lang: 'en'
+    }
 }

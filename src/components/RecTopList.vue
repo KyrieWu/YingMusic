@@ -2,17 +2,26 @@
   <!-- 排行榜 -->
   <div class="toplist-container">
     <div class="head">
-      <h2>排行榜</h2>
+      <h2>{{ $t("home.charts") }}</h2>
       <div class="showAll">
-        <router-link to="/allTopList" style="letter-spacing: normal;">更多&#8594</router-link>
+        <router-link to="/allTopList" style="letter-spacing: normal">{{
+          $t("home.seeMore")
+        }}</router-link>
       </div>
     </div>
     <div class="content">
-      <div class="item" v-for="(head, index) in topMusicList.keys()" :key="index">
+      <div
+        class="item"
+        v-for="(head, index) in topMusicList.keys()"
+        :key="index"
+      >
         <div class="bg" :style="backColorList[index]"></div>
         <div class="play">
           <div class="playIcon" @click="playAllSong(topMusicList.get(head))">
-            <img src="https://y.qq.com/ryqq/static/media/cover_play@2x.53a26efb.png?max_age=2592000" alt="" />
+            <img
+              src="https://y.qq.com/ryqq/static/media/cover_play@2x.53a26efb.png?max_age=2592000"
+              alt=""
+            />
           </div>
         </div>
         <i class="line"></i>
@@ -21,19 +30,25 @@
         </div>
         <div class="discription">
           <ol class="songlist">
-            <li v-for="item in topMusicList.get(head).slice(0, 5)" :key="item.id">
-              <a @click="toSongDetail(item)" class="songname">{{ item.name }}</a><br>
-              <router-link :to="{
-                path: '/artistDetail',
-                query: { id: item.ar[0].id },
-              }" class="artistname">
-                {{ item.ar[0].name }}</router-link>
+            <li
+              v-for="item in topMusicList.get(head).slice(0, 5)"
+              :key="item.id"
+            >
+              <a @click="toSongDetail(item)" class="songname">{{ item.name }}</a
+              ><br />
+              <router-link
+                :to="{
+                  path: '/artistDetail',
+                  query: { id: item.ar[0].id },
+                }"
+                class="artistname"
+              >
+                {{ item.ar[0].name }}</router-link
+              >
             </li>
           </ol>
         </div>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -44,11 +59,11 @@ name: "TopLIST";
 <script setup lang="ts">
 import { getTopList, getPlayListTrack } from "@/api/home";
 import { onBeforeMount, ref, reactive, toRefs } from "vue";
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
-const store = useStore()
-const router = useRouter()
+const store = useStore();
+const router = useRouter();
 
 let topListInfo = ref<TopListInfo[]>([]);
 let topMusicList = ref(new Map());
@@ -59,9 +74,9 @@ const data = reactive({
     "background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);",
     "background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);",
     "background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);",
-    "background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);"
-  ]
-})
+    "background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);",
+  ],
+});
 
 const playAllSong = (songs: SongInfo[]): void => {
   store.commit("UPDATEPLAYLIST", songs);
@@ -84,8 +99,7 @@ onBeforeMount(async () => {
   }
 });
 
-const { backColorList } = toRefs(data)
-
+const { backColorList } = toRefs(data);
 </script>
 
 <style scoped lang="scss">
@@ -108,7 +122,6 @@ const { backColorList } = toRefs(data)
     width: 100%;
     height: 16%;
     text-align: center;
-    letter-spacing: 10px;
     position: relative;
 
     h2 {
@@ -168,7 +181,6 @@ const { backColorList } = toRefs(data)
         opacity: 0;
         transform: scale(0.5);
 
-
         img {
           width: 100%;
           height: 100%;
@@ -185,9 +197,6 @@ const { backColorList } = toRefs(data)
             transform: scale(0.97);
           }
         }
-
-
-
       }
 
       &:hover {

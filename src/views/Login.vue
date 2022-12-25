@@ -9,14 +9,14 @@
               alt=""
             />
           </div>
-          <h2>登录网易云账号</h2>
+          <h2>{{ $t("login.loginText") }}</h2>
           <div class="phoneNumber">
             <div class="img">
               <img src="@/assets/icons/mobile.svg" alt="" />
             </div>
             <input
               type="text"
-              placeholder="手机号"
+              :placeholder="$t('login.phone')"
               v-model.trim="phone"
               @focus="showvaild(false)"
               @blur="checkPhone"
@@ -27,13 +27,21 @@
           </div>
           <div class="password" v-if="logintype == 2">
             <div class="img"><img src="@/assets/icons/lock.svg" alt="" /></div>
-            <input type="password" placeholder="密码" v-model="password" />
+            <input
+              type="password"
+              :placeholder="$t('login.password')"
+              v-model="password"
+            />
           </div>
           <div class="captcha" v-if="logintype == 1">
             <div class="img">
               <img src="@/assets/icons/验证码.png" alt="" />
             </div>
-            <input type="text" placeholder="验证码" v-model="captcha" />
+            <input
+              type="text"
+              :placeholder="$t('login.captcha')"
+              v-model="captcha"
+            />
             <button
               type="button"
               :disabled="
@@ -48,25 +56,27 @@
                   showPhoneVaild == true,
               }"
             >
-              {{ enable ? "发送验证码" : time }}
+              {{ enable ? $t("login.sendCaptcha") : time }}
             </button>
             <div class="captcha_vaild" v-show="showCaptchaVaild">
               请输入手机号!
             </div>
           </div>
-          <button @click="toLogin">登录</button>
+          <button @click="toLogin">{{ $t("login.login") }}</button>
         </div>
         <div class="logintype">
-          <span @click="logintype = 2" v-show="logintype == 1">密码登录</span>
-          <span @click="logintype = 1" v-show="logintype == 2">验证码登录</span>
+          <span @click="logintype = 2" v-show="logintype == 1">{{
+            $t("login.loginWithPassword")
+          }}</span>
+          <span @click="logintype = 1" v-show="logintype == 2">{{
+            $t("login.loginWithCaptcha")
+          }}</span>
         </div>
       </div>
     </div>
     <div class="notice">
       <p>
-        YingMusic 承诺不会保存你的任何账号信息到云端。 你的密码会在本地进行 MD5
-        加密后再传输到网易云 API。 YingMusic
-        并非网易云官方网站，输入账号信息前请慎重考虑。
+        {{ $t("login.notice") }}
       </p>
     </div>
   </div>

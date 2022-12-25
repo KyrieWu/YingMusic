@@ -2,15 +2,19 @@
   <!-- 新碟上架 -->
   <div class="albumlist-container">
     <div class="head">
-      <h2>新碟上架</h2>
+      <h2>{{ $t("home.newAlbum") }}</h2>
     </div>
     <div class="nav">
-      <a @click="area = 'ALL'" :class="{active:area == 'ALL'}">精彩推荐</a>
-      <a v-for="(item, index) in altumAreas" :key="item" @click="area = index" :class="{ active: area == index }">{{
-          item
-      }}</a>
+      <a @click="area = 'ALL'" :class="{ active: area == 'ALL' }">精彩推荐</a>
+      <a
+        v-for="(item, index) in altumAreas"
+        :key="item"
+        @click="area = index"
+        :class="{ active: area == index }"
+        >{{ item }}</a
+      >
       <div class="showAll">
-        <router-link to="/allAltumList">更多&#8594</router-link>
+        <router-link to="/allAltumList">{{ $t("home.seeMore") }}</router-link>
       </div>
     </div>
     <div class="content">
@@ -23,55 +27,61 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, ref, watch } from 'vue'
-import { getNewAlbum } from '@/api/home'
-import SquareItemList from '@/components/SquareItemList.vue'
+import { onBeforeMount, ref, watch } from "vue";
+import { getNewAlbum } from "@/api/home";
+import SquareItemList from "@/components/SquareItemList.vue";
 
 interface AlbumArea {
-  ZH: string,
-  EA: string,
-  KR: string,
-  JP: string
+  ZH: string;
+  EA: string;
+  KR: string;
+  JP: string;
 }
 
-
-let PlayListData = ref<AlbumInfo[]>([])
+let PlayListData = ref<AlbumInfo[]>([]);
 let altumAreas = ref<AlbumArea>({
-  ZH: '华语', EA: '欧美', KR: '韩国', JP: '日本'
-})
+  ZH: "华语",
+  EA: "欧美",
+  KR: "韩国",
+  JP: "日本",
+});
 
-let area = ref('ALL')
+let area = ref("ALL");
 
-let squareItems = ref<SquareItemProps[]>([])
-
+let squareItems = ref<SquareItemProps[]>([]);
 
 let getAltums = async () => {
   let result = await getNewAlbum(area.value, 10, 0);
-  PlayListData.value = result.albums
-  squareItems.value = []
-  PlayListData.value.forEach(item => {
-    squareItems.value.push(Object.freeze({
-      id: item.id,
-      picUrl: item.picUrl,
-      name: item.name,
-      artistId: item.artist.id,
-      artistName: item.artist.name,
-      routerPath: '/altumDetail'
-    }))
-  })
-}
+  PlayListData.value = result.albums;
+  squareItems.value = [];
+  PlayListData.value.forEach((item) => {
+    squareItems.value.push(
+      Object.freeze({
+        id: item.id,
+        picUrl: item.picUrl,
+        name: item.name,
+        artistId: item.artist.id,
+        artistName: item.artist.name,
+        routerPath: "/altumDetail",
+      })
+    );
+  });
+};
 
-watch(() => area.value, () => {
-  getAltums()
-})
+watch(
+  () => area.value,
+  () => {
+    getAltums();
+  }
+);
 
 onBeforeMount(() => {
-  getAltums()
-})
+  getAltums();
+});
 </script>
 
 <style scoped lang="scss">
-@media (max-width:1500px) {
+@media (max-width: 1500px) {
   .albumlist-container {
     min-width: 1487px;
   }
@@ -79,7 +89,6 @@ onBeforeMount(() => {
   .item {
     float: none;
   }
-
 }
 
 .albumlist-container {
@@ -91,7 +100,6 @@ onBeforeMount(() => {
     width: 100%;
     height: 8%;
     text-align: center;
-    letter-spacing: 10px;
 
     h2 {
       line-height: 100px;

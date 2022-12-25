@@ -5,10 +5,16 @@
       <h2>MV</h2>
     </div>
     <div class="nav">
-      <a @click="mvType = ''" :class="{active:mvType==''}">精彩推荐</a>
-      <a v-for="item in navList" :key="item" @click="mvType = item" :class="{ active: mvType == item }">{{ item }}</a>
+      <a @click="mvType = ''" :class="{ active: mvType == '' }">精彩推荐</a>
+      <a
+        v-for="item in navList"
+        :key="item"
+        @click="mvType = item"
+        :class="{ active: mvType == item }"
+        >{{ item }}</a
+      >
       <div class="showAll">
-        <router-link to="/allMVList">更多&#8594</router-link>
+        <router-link to="/allMVList">{{ $t("home.seeMore") }}</router-link>
       </div>
     </div>
     <div class="content">
@@ -21,46 +27,50 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, ref, watch } from 'vue'
-import { getMVList } from '@/api/home'
-import MVItem, { MVProps } from '@/components/MVItem.vue'
+import { onBeforeMount, ref, watch } from "vue";
+import { getMVList } from "@/api/home";
+import MVItem, { MVProps } from "@/components/MVItem.vue";
 
-let navList = ref(['内地', '港台', '欧美', '韩国', '日本'])
+let navList = ref(["内地", "港台", "欧美", "韩国", "日本"]);
 
-let mvDatas = ref<MVInfo[]>([])
-let mvType = ref('')
-let mvList = ref<MVProps[]>([])
+let mvDatas = ref<MVInfo[]>([]);
+let mvType = ref("");
+let mvList = ref<MVProps[]>([]);
 
-watch(() => mvType.value, () => {
-  getRecMV()
-})
+watch(
+  () => mvType.value,
+  () => {
+    getRecMV();
+  }
+);
 
 const getRecMV = async () => {
   let result = await getMVList(mvType.value);
   mvDatas.value = result.data;
-  mvList.value = []
-  mvDatas.value.forEach(item => {
-    mvList.value.push(Object.freeze({
-      id: item.id,
-      name: item.name,
-      picUrl: item.cover,
-      artistId: item.artistId,
-      artistName: item.artistName
-    }))
-  })
-}
+  mvList.value = [];
+  mvDatas.value.forEach((item) => {
+    mvList.value.push(
+      Object.freeze({
+        id: item.id,
+        name: item.name,
+        picUrl: item.cover,
+        artistId: item.artistId,
+        artistName: item.artistName,
+      })
+    );
+  });
+};
 
 onBeforeMount(() => {
-  getRecMV()
-})
+  getRecMV();
+});
 </script>
 
 <style scoped lang="scss">
-@media (max-width:1500px) {
+@media (max-width: 1500px) {
   .albumlist-container {
     min-width: 1487px;
   }
-
 }
 
 .albumlist-container {
@@ -74,7 +84,6 @@ onBeforeMount(() => {
     width: 100%;
     height: 6rem;
     text-align: center;
-    letter-spacing: 10px;
 
     h2 {
       line-height: 100px;

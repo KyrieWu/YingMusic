@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 //import './assets/icons';
+import i18n from './locale';
 import '@/styles//global.scss'
 import '@/styles/nprogress.css'
 import router from './router';
@@ -14,6 +15,7 @@ NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
 const app = createApp(App)
 app.use(router)
-app.use(store)
-app.use(imgLazy)
-app.mount('#app')
+    .use(store)
+    .use(imgLazy)
+    .use(i18n)
+    .mount('#app')

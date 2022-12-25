@@ -82,7 +82,7 @@ export class Swiper {
         let current_link = this.links[this.current_index];
         this.swipe_bg.value.style.backgroundImage = "url(" + current_link.imageUrl + ")";
         this.swipe_img.value.setAttribute("src", current_link.imageUrl);
-        if (current_link.url != null) {
+        if (current_link.url !== null) {
             this.swipe_link.value.setAttribute("href", current_link.url);
         }
 

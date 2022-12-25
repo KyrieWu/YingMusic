@@ -2,21 +2,26 @@
   <!-- 推荐歌单 -->
   <div class="recommend-container">
     <div class="head">
-      <h2>歌单推荐</h2>
+      <h2>{{ $t("home.recommendPlaylist") }}</h2>
     </div>
     <div class="nav">
-      <a :class="{ active: catTag === '为你推荐' }" @click="getPlayList">精彩推荐</a>
-      <a :class="{ active: catTag === item }" @click="getcategoryPlayList(item)" v-for="item in navList" :key="item">{{
-          item
-      }}</a>
+      <a :class="{ active: catTag === '为你推荐' }" @click="getPlayList"
+        >精彩推荐</a
+      >
+      <a
+        :class="{ active: catTag === item }"
+        @click="getcategoryPlayList(item)"
+        v-for="item in navList"
+        :key="item"
+        >{{ item }}</a
+      >
       <div class="showAll">
-        <router-link to="/allPlayList">更多&#8594</router-link>
+        <router-link to="/allPlayList">{{ $t("home.seeMore") }}</router-link>
       </div>
     </div>
     <div class="content">
       <square-item-list :squareItems="squareItems"></square-item-list>
     </div>
-
   </div>
 </template>
 
@@ -24,58 +29,59 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
-import { getRecPlayList, getReccategoryPlayList } from '@/api/home'
-import SquareItemList from '@/components/SquareItemList.vue'
+import { onBeforeMount, ref } from "vue";
+import { getRecPlayList, getReccategoryPlayList } from "@/api/home";
+import SquareItemList from "@/components/SquareItemList.vue";
 
+let PlayListData = ref<PlayListInfo[] | ReccategoryPlaylistInfo[]>([]);
+let catTag = ref("");
 
-let PlayListData = ref<PlayListInfo[] | ReccategoryPlaylistInfo[]>([])
-let catTag = ref('')
+let navList = ref(["华语", "流行", "摇滚", "民谣", "电子"]);
 
-let navList = ref(['华语', '流行', '摇滚', '民谣', '电子'])
-
-let squareItems = ref<SquareItemProps[]>([])
-
+let squareItems = ref<SquareItemProps[]>([]);
 
 const getcategoryPlayList = async (cat: string) => {
   let result = await getReccategoryPlayList(10, cat, 0);
-  PlayListData.value = result.playlists
-  squareItems.value = []
-  PlayListData.value.forEach(item => {
-    squareItems.value.push(Object.freeze({
-      id: item.id,
-      picUrl: item.coverImgUrl,
-      name: item.name,
-      routerPath: '/songlistDetail'
-    }))
-  })
-  catTag.value = cat
-}
+  PlayListData.value = result.playlists;
+  squareItems.value = [];
+  PlayListData.value.forEach((item) => {
+    squareItems.value.push(
+      Object.freeze({
+        id: item.id,
+        picUrl: item.coverImgUrl,
+        name: item.name,
+        routerPath: "/songlistDetail",
+      })
+    );
+  });
+  catTag.value = cat;
+};
 
 const getPlayList = async () => {
   let result = await getRecPlayList();
   PlayListData.value = result.result;
-  squareItems.value = []
-  PlayListData.value.forEach(item => {
-    squareItems.value.push(Object.freeze({
-      id: item.id,
-      picUrl: item.picUrl,
-      name: item.name,
-      routerPath: '/songlistDetail'
-    }))
-  })
+  squareItems.value = [];
+  PlayListData.value.forEach((item) => {
+    squareItems.value.push(
+      Object.freeze({
+        id: item.id,
+        picUrl: item.picUrl,
+        name: item.name,
+        routerPath: "/songlistDetail",
+      })
+    );
+  });
 
-  catTag.value = "为你推荐"
-}
-
+  catTag.value = "为你推荐";
+};
 
 onBeforeMount(() => {
-  getPlayList()
-})
+  getPlayList();
+});
 </script>
 
 <style scoped lang="scss">
-@media (max-width:1500px) {
+@media (max-width: 1500px) {
   .recommend-container {
     min-width: 1487px;
   }
@@ -94,7 +100,6 @@ onBeforeMount(() => {
     width: 100%;
     height: 8%;
     text-align: center;
-    letter-spacing: 10px;
 
     h2 {
       line-height: 100px;

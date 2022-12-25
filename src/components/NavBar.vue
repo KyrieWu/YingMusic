@@ -1,23 +1,47 @@
 <template>
   <!-- 模块列表 -->
   <nav>
-    <router-link to="/allPlayList" class="icon-item" :class="{ active: route.name === 'allPlayList' }">
-      分类歌单
+    <router-link
+      to="/allPlayList"
+      class="icon-item"
+      :class="{ active: route.name === 'allPlayList' }"
+    >
+      {{ $t("nav.playlists") }}
     </router-link>
-    <router-link to="/allArtists" class="icon-item" :class="{ active: route.name === 'allArtists' }">
-      歌手
+    <router-link
+      to="/allArtists"
+      class="icon-item"
+      :class="{ active: route.name === 'allArtists' }"
+    >
+      {{ $t("nav.artists") }}
     </router-link>
-    <router-link to="/allTopList" class="icon-item" :class="{ active: route.name === 'allTopList' }">
-      排行榜
+    <router-link
+      to="/allTopList"
+      class="icon-item"
+      :class="{ active: route.name === 'allTopList' }"
+    >
+      {{ $t("nav.charts") }}
     </router-link>
-    <router-link to="/allFMList" class="icon-item" :class="{ active: route.name === 'allFMList' }">
-      电台
+    <router-link
+      to="/allFMList"
+      class="icon-item"
+      :class="{ active: route.name === 'allFMList' }"
+    >
+      {{ $t("nav.fm") }}
     </router-link>
-    <router-link to="/allMVList" class="icon-item" :class="{ active: route.name === 'allMVList' }">
+    <router-link
+      to="/allMVList"
+      class="icon-item"
+      :class="{ active: route.name === 'allMVList' }"
+    >
       MV
     </router-link>
-    <router-link to="/allAltumList" class="icon-item" :class="{ active: route.name === 'allAltumList' }">
-      新碟
+    <router-link
+      to="/allAltumList"
+      class="icon-item"
+      :class="{ active: route.name === 'allAltumList' }"
+    >
+      {{ $t("nav.album") }}
     </router-link>
   </nav>
 </template>
@@ -29,7 +53,6 @@ name: "IconList";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-
 </script>
 
 <style scoped lang="scss">
@@ -76,7 +99,6 @@ nav {
     font-weight: 600;
     line-height: 6rem;
     color: var(--color-text);
-
 
     padding: {
       right: 5px;

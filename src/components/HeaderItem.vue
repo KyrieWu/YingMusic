@@ -8,9 +8,10 @@
     </router-link>
 
     <div class="naviagtion-links">
-      <router-link to="/" :class="{ active: $route.name === 'home' }">首页</router-link>
-      <router-link to="/allPlayList" :class="{ active: $route.meta.musicHall }">音乐馆</router-link>
-      <router-link to="/library" :class="{ active: $route.name === 'library' }">我的音乐</router-link>
+      <router-link to="/" :class="{ active: $route.name === 'home' }">{{ $t('header.home') }}</router-link>
+      <router-link to="/allPlayList" :class="{ active: $route.meta.musicHall }">{{ $t('header.discover')
+      }}</router-link>
+      <router-link to="/library" :class="{ active: $route.name === 'library' }">{{ $t('header.profile') }}</router-link>
     </div>
     <div class="right-part">
       <div class="search-box">
@@ -29,17 +30,17 @@
   <context-menu ref="userProfileMenu">
     <div class="item">
       <img src="../assets/icons/settings.svg" alt="" />
-      设置
+      {{ $t('profile.userProfileMenu.settings') }}
     </div>
 
     <div v-if="!isLogin" class="item" @click="toLogin">
       <img src="../assets/icons/login.svg" alt="" />
-      登录
+      {{ $t('login.login') }}
     </div>
 
     <div v-if="isLogin" class="item" @click="toLogout">
       <img src="../assets/icons/logout.svg" alt="" />
-      退出登录
+      {{ $t('profile.userProfileMenu.logout') }}
     </div>
   </context-menu>
 </template>

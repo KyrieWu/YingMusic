@@ -2,15 +2,16 @@
   <!-- 推荐歌手 -->
   <div class="artists-container">
     <div class="head">
-      <h2>歌手推荐</h2>
+      <h2>{{ $t("home.recommendArtist") }}</h2>
       <div class="showAll">
-        <router-link to="/allArtists" style="letter-spacing: normal;">更多&#8594</router-link>
+        <router-link to="/allArtists" style="letter-spacing: normal">{{
+          $t("home.seeMore")
+        }}</router-link>
       </div>
     </div>
     <div class="content">
       <aritst-item :artists-infos="artistsInfos"></aritst-item>
     </div>
-
   </div>
 </template>
 
@@ -18,17 +19,16 @@
 name: "RecPlayList";
 </script>
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
-import { getRecArtists } from '@/api/home'
-import AritstItem from '@/components/AritstItem.vue'
+import { onBeforeMount, ref } from "vue";
+import { getRecArtists } from "@/api/home";
+import AritstItem from "@/components/AritstItem.vue";
 
-let artistsInfos = ref<ArtistsInfo[]>([])
+let artistsInfos = ref<ArtistsInfo[]>([]);
 
 onBeforeMount(async () => {
   let res = await getRecArtists();
-  artistsInfos.value = res.artists
-})
-
+  artistsInfos.value = res.artists;
+});
 </script>
 
 <style scoped lang="scss">
@@ -53,7 +53,6 @@ onBeforeMount(async () => {
     width: 100%;
     height: 16%;
     text-align: center;
-    letter-spacing: 10px;
     position: relative;
     margin-bottom: 5rem;
 
