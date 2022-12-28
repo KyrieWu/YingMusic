@@ -13,26 +13,60 @@
     </div>
     <div class="library_dommon">
       <div class="dommon_nav">
-        <span class="nav_item" @click="navType = 1" :class="{ active: navType == 1 }">我收藏的</span>
-        <span class="nav_item" @click="navType = 2" :class="{ active: navType == 2 }">我创建的歌单</span>
-        <span class="nav_item" @click="navType = 3" :class="{ active: navType == 3 }">我关注的</span>
+        <span
+          class="nav_item"
+          @click="navType = 1"
+          :class="{ active: navType == 1 }"
+          >我收藏的</span
+        >
+        <span
+          class="nav_item"
+          @click="navType = 2"
+          :class="{ active: navType == 2 }"
+          >我创建的歌单</span
+        >
+        <span
+          class="nav_item"
+          @click="navType = 3"
+          :class="{ active: navType == 3 }"
+          >我关注的</span
+        >
       </div>
       <div class="dommon_content">
         <div class="nav">
           <div class="like_nav" v-if="navType == 1">
-            <span class="nav_item" @click="likeNavType = 1" :class="{ active: likeNavType == 1 }">歌曲({{ songList.length
-            }})</span>
-            <span class="nav_item" @click="likeNavType = 2" :class="{ active: likeNavType == 2 }">歌单({{ playlists.length
-            }})</span>
-            <span class="nav_item" @click="likeNavType = 3" :class="{ active: likeNavType == 3 }">专辑({{ albumList.length
-            }})</span>
-            <span class="nav_item" @click="likeNavType = 4" :class="{ active: likeNavType == 4 }">MV({{ mvList.length
-            }})</span>
+            <span
+              class="nav_item"
+              @click="likeNavType = 1"
+              :class="{ active: likeNavType == 1 }"
+              >歌曲({{ songList.length }})</span
+            >
+            <span
+              class="nav_item"
+              @click="likeNavType = 2"
+              :class="{ active: likeNavType == 2 }"
+              >歌单({{ playlists.length }})</span
+            >
+            <span
+              class="nav_item"
+              @click="likeNavType = 3"
+              :class="{ active: likeNavType == 3 }"
+              >专辑({{ albumList.length }})</span
+            >
+            <span
+              class="nav_item"
+              @click="likeNavType = 4"
+              :class="{ active: likeNavType == 4 }"
+              >MV({{ mvList.length }})</span
+            >
           </div>
           <div class="attention_nav" v-if="navType == 3">
-            <span class="nav_item" @click="attentionNavType = 1" :class="{ active: attentionNavType == 1 }">歌手({{
-                aritstList.length
-            }})</span>
+            <span
+              class="nav_item"
+              @click="attentionNavType = 1"
+              :class="{ active: attentionNavType == 1 }"
+              >歌手({{ aritstList.length }})</span
+            >
           </div>
         </div>
         <div class="content">
@@ -51,27 +85,45 @@
                       {{ index + 1 }}
                     </div>
                     <div class="songlist__songname">
-                      <span class="songlist__songname_txt"><a :title="item.name" @click="toSongDetail(item)">{{
+                      <span class="songlist__songname_txt"
+                        ><a :title="item.name" @click="toSongDetail(item)">{{
                           item.name
-                      }}</a></span>
+                        }}</a></span
+                      >
 
                       <div class="mod_list_menu">
-                        <a class="list_menu__item list_menu__play" title="播放" @click="playSong(item)"><i
-                            class="list_menu__icon_play"></i></a><a class="list_menu__item list_menu__add"
-                          title="添加到歌单"><i class="list_menu__icon_add"></i></a>
+                        <a
+                          class="list_menu__item list_menu__play"
+                          title="播放"
+                          @click="playSong(item)"
+                          ><i class="list_menu__icon_play"></i></a
+                        ><a
+                          class="list_menu__item list_menu__add"
+                          title="添加到歌单"
+                          ><i class="list_menu__icon_add"></i
+                        ></a>
                       </div>
                     </div>
                     <div class="songlist__artist">
-                      <router-link :to="{
-                        path: '/artistDetail',
-                        query: { id: item.ar[0].id },
-                      }" class="playlist__author" :title="item.ar[0].name">{{ item.ar[0].name }}</router-link>
+                      <router-link
+                        :to="{
+                          path: '/artistDetail',
+                          query: { id: item.ar[0].id },
+                        }"
+                        class="playlist__author"
+                        :title="item.ar[0].name"
+                        >{{ item.ar[0].name }}</router-link
+                      >
                     </div>
                     <div class="songlist__album">
-                      <router-link :to="{
-                        path: '/altumDetail',
-                        query: { id: item.al.id },
-                      }" :title="item.al.name">{{ item.al.name }}</router-link>
+                      <router-link
+                        :to="{
+                          path: '/altumDetail',
+                          query: { id: item.al.id },
+                        }"
+                        :title="item.al.name"
+                        >{{ item.al.name }}</router-link
+                      >
                     </div>
                     <div class="songlist__time">
                       {{ timestampToTime(item.dt) }}
@@ -83,10 +135,16 @@
             <blankprompt v-else> </blankprompt>
           </div>
           <div class="playlist" v-show="likeNavType == 2 && navType == 1">
-            <square-item-list :square-items="playlists" v-if="playlists.length !== 0"></square-item-list>
+            <square-item-list
+              :square-items="playlists"
+              v-if="playlists.length !== 0"
+            ></square-item-list>
           </div>
           <div class="album" v-show="likeNavType == 3 && navType == 1">
-            <square-item-list :square-items="albumList" v-if="albumList.length !== 0"></square-item-list>
+            <square-item-list
+              :square-items="albumList"
+              v-if="albumList.length !== 0"
+            ></square-item-list>
             <blankprompt v-else> </blankprompt>
           </div>
           <div class="mv" v-show="likeNavType == 4 && navType == 1">
@@ -94,7 +152,10 @@
             <blankprompt v-else> </blankprompt>
           </div>
           <div class="artist" v-show="attentionNavType == 1 && navType == 3">
-            <aritst-item :artists-infos="aritstList" v-if="aritstList.length !== 0"></aritst-item>
+            <aritst-item
+              :artists-infos="aritstList"
+              v-if="aritstList.length !== 0"
+            ></aritst-item>
             <blankprompt v-else>
               <p style="color: var(--color-text); font-size: 1.8rem">
                 还没有关注的歌手!
@@ -102,7 +163,10 @@
             </blankprompt>
           </div>
           <div class="playlist" v-show="navType == 2">
-            <square-item-list :square-items="userplaylists" v-if="userplaylists.length !== 0"></square-item-list>
+            <square-item-list
+              :square-items="userplaylists"
+              v-if="userplaylists.length !== 0"
+            ></square-item-list>
           </div>
         </div>
       </div>
@@ -115,7 +179,7 @@ name: "LibraryItem";
 </script>
 <script setup lang="ts">
 import { useStore } from "vuex";
-import { onBeforeMount, watch, ref, computed, reactive, toRefs } from "vue";
+import { onBeforeMount, watch, computed, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import SquareItemList from "@/components/SquareItemList.vue";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
@@ -504,7 +568,8 @@ const { navType, likeNavType, attentionNavType } = toRefs(data);
                       float: left;
 
                       .list_menu__icon_play {
-                        background: url("@/assets/icons/播放-blue.png") no-repeat center/cover;
+                        background: url("@/assets/icons/播放-blue.png")
+                          no-repeat center/cover;
                         width: 40px;
                         height: 40px;
                         display: inline-block;
@@ -515,7 +580,8 @@ const { navType, likeNavType, attentionNavType } = toRefs(data);
                       }
 
                       .list_menu__icon_add {
-                        background: url("@/assets/icons/添加-blue.png") no-repeat center/cover;
+                        background: url("@/assets/icons/添加-blue.png")
+                          no-repeat center/cover;
                         width: 39px;
                         height: 39px;
                         display: inline-block;
