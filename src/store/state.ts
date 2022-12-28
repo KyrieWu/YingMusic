@@ -59,6 +59,6 @@ export default {
     likeArtistlist: [],
     dailyRecommendSongs: [] as SongInfo[],
     setting: {
-        lang: 'en'
+        lang: ''
     }
 }

@@ -17,7 +17,13 @@
             <div class="data_tag_box">
               标签:&nbsp;
               <span>
-                <a href="" class="data_info_tags" v-for="(item, index) in playListData.tags" :key="index">{{ item }}</a>
+                <a
+                  href=""
+                  class="data_info_tags"
+                  v-for="(item, index) in playListData.tags"
+                  :key="index"
+                  >{{ item }}</a
+                >
               </span>
             </div>
           </li>
@@ -65,26 +71,42 @@
                   {{ index + 1 }}
                 </div>
                 <div class="songlist__songname">
-                  <span class="songlist__songname_txt"><a :title="item.name" @click="toSongDetail(item)">{{
+                  <span class="songlist__songname_txt"
+                    ><a :title="item.name" @click="toSongDetail(item)">{{
                       item.name
-                  }}</a></span>
+                    }}</a></span
+                  >
 
                   <div class="mod_list_menu">
-                    <a class="list_menu__item list_menu__play" title="播放" @click="playSong(item)"><i
-                        class="list_menu__icon_play"></i></a><a class="list_menu__item list_menu__add" title="添加到歌单"><i
-                        class="list_menu__icon_add"></i></a>
+                    <a
+                      class="list_menu__item list_menu__play"
+                      :title="$t('songItem.play')"
+                      @click="playSong(item)"
+                      ><i class="list_menu__icon_play"></i></a
+                    ><a
+                      class="list_menu__item list_menu__add"
+                      :title="$t('songItem.add')"
+                      ><i class="list_menu__icon_add"></i
+                    ></a>
                   </div>
                 </div>
                 <div class="songlist__artist">
-                  <router-link :to="{
-                    path: '/artistDetail',
-                    query: { id: item.ar[0].id },
-                  }" class="playlist__author" :title="item.ar[0].name">{{ item.ar[0].name }}</router-link>
+                  <router-link
+                    :to="{
+                      path: '/artistDetail',
+                      query: { id: item.ar[0].id },
+                    }"
+                    class="playlist__author"
+                    :title="item.ar[0].name"
+                    >{{ item.ar[0].name }}</router-link
+                  >
                 </div>
                 <div class="songlist__album">
-                  <router-link :to="{ path: '/altumDetail', query: { id: item.al.id } }" :title="item.al.name">{{
-                      item.al.name
-                  }}</router-link>
+                  <router-link
+                    :to="{ path: '/altumDetail', query: { id: item.al.id } }"
+                    :title="item.al.name"
+                    >{{ item.al.name }}</router-link
+                  >
                 </div>
                 <div class="songlist__time">{{ timestampToTime(item.dt) }}</div>
               </div>
@@ -95,10 +117,16 @@
       <div class="detail_layout_other">
         <div class="mod_about">
           <h3 class="about_tit">简介</h3>
-          <div class="about_cont" :class="{ about_cont_up: isPackUp }" ref="about_cont">
+          <div
+            class="about_cont"
+            :class="{ about_cont_up: isPackUp }"
+            ref="about_cont"
+          >
             {{ playListData.description }}
           </div>
-          <a class="about_more" v-if="isPackUp" @click="packDown">展开&#8595;</a>
+          <a class="about_more" v-if="isPackUp" @click="packDown"
+            >展开&#8595;</a
+          >
           <a class="pack_up" v-if="!isPackUp" @click="packUp">收起&#8593;</a>
         </div>
       </div>
@@ -121,7 +149,7 @@ import { timestampToTime } from "@/utils/utils";
 import { useStore } from "vuex";
 import SquareItemList from "@/components/SquareItemList.vue";
 import { onBeforeRouteUpdate } from "vue-router";
-import NProgress from 'nprogress'
+import NProgress from "nprogress";
 
 interface relatedPlaylist {
   code: 200;
@@ -177,7 +205,7 @@ const playAllSong = (songs: SongInfo[]): void => {
 
 const getsongLists = async (id: number) => {
   let res = (await getSongListInfo(id)) as unknown as Songlist;
-  NProgress.done()
+  NProgress.done();
   playListData.value = res.playlist;
   trackInfos.value = [];
   playListData.value.tracks.slice(0, 10).forEach((item: SongInfo) => {
@@ -582,7 +610,8 @@ const toLikeplaylist = async () => {
                   float: left;
 
                   .list_menu__icon_play {
-                    background: url("@/assets/icons/播放-blue.png") no-repeat center/cover;
+                    background: url("@/assets/icons/播放-blue.png") no-repeat
+                      center/cover;
                     width: 4rem;
                     height: 4rem;
                     display: inline-block;
@@ -593,7 +622,8 @@ const toLikeplaylist = async () => {
                   }
 
                   .list_menu__icon_add {
-                    background: url("@/assets/icons/添加-blue.png") no-repeat center/cover;
+                    background: url("@/assets/icons/添加-blue.png") no-repeat
+                      center/cover;
                     width: 4rem;
                     height: 4rem;
                     display: inline-block;

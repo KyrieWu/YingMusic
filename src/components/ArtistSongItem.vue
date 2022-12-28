@@ -12,18 +12,30 @@
             {{ index + 1 }}
           </div>
           <div class="songlist__songname">
-            <span class="songlist__songname_txt"><a :title="item.name" @click="toSongDetail(item)">{{
+            <span class="songlist__songname_txt"
+              ><a :title="item.name" @click="toSongDetail(item)">{{
                 item.name
-            }}</a></span>
+              }}</a></span
+            >
 
             <div class="mod_list_menu">
-              <a class="list_menu__item list_menu__play" title="播放" @click="playSong(item)"><i
-                  class="list_menu__icon_play"></i></a><a class="list_menu__item list_menu__add" title="添加到歌单"><i
-                  class="list_menu__icon_add"></i></a>
+              <a
+                class="list_menu__item list_menu__play"
+                :title="$t('songItem.play')"
+                @click="playSong(item)"
+                ><i class="list_menu__icon_play"></i></a
+              ><a
+                class="list_menu__item list_menu__add"
+                :title="$t('songItem.add')"
+                ><i class="list_menu__icon_add"></i
+              ></a>
             </div>
           </div>
           <div class="songlist__album">
-            <router-link :to="{ path: '/altumDetail', query: { id: item.al.id } }" href="">{{ item.al.name }}
+            <router-link
+              :to="{ path: '/altumDetail', query: { id: item.al.id } }"
+              href=""
+              >{{ item.al.name }}
             </router-link>
           </div>
           <div class="songlist__time">{{ timestampToTime(item.dt) }}</div>
@@ -169,7 +181,8 @@ const toSongDetail = (item: SongInfo) => {
             float: left;
 
             .list_menu__icon_play {
-              background: url("@/assets/icons/播放-blue.png") no-repeat center/cover;
+              background: url("@/assets/icons/播放-blue.png") no-repeat
+                center/cover;
               width: 4rem;
               height: 4rem;
               display: inline-block;
@@ -180,7 +193,8 @@ const toSongDetail = (item: SongInfo) => {
             }
 
             .list_menu__icon_add {
-              background: url("@/assets/icons/添加-blue.png") no-repeat center/cover;
+              background: url("@/assets/icons/添加-blue.png") no-repeat
+                center/cover;
               width: 4rem;
               height: 4rem;
               display: inline-block;

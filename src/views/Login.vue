@@ -137,7 +137,7 @@ const toLogin = async () => {
     });
     return;
   }
-
+  console.log(data.phone, data.captcha);
   let result = await store.dispatch("toLogin", {
     phone: data.phone,
     password: Md5.hashStr(data.password),

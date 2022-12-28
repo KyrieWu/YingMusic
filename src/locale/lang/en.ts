@@ -235,4 +235,8 @@ export default {
         copyFailed: 'Copy failed: ',
         needToLogin: 'Need to log into netease account',
     },
+    songItem: {
+        play: 'Play',
+        add: "Add to the playlist "
+    }
 };

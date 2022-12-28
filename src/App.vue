@@ -1,6 +1,5 @@
 <template>
   <HeaderItem />
-  <!-- <MessageItem message="手机号或密码错误" type="warn" v-if="store.state.showPlayerBar"></MessageItem> -->
   <NavBar v-if="$route.meta.musicHall" />
   <main>
     <router-view v-slot="{ Component }">
@@ -10,14 +9,17 @@
     </router-view>
   </main>
   <play-bar v-show="store.state.showPlayerBar"></play-bar>
+  <footer>
+    <Footer />
+  </footer>
 </template>
 
 <script setup lang="ts">
 import HeaderItem from "./components/HeaderItem.vue";
 import PlayBar from "@/components/PlayBar.vue";
 import NavBar from "@/components/NavBar.vue";
+import Footer from "./views/Footer.vue";
 import { useStore } from "vuex";
-import MessageItem from "./components/Message/MessageItem.vue";
 
 const store = useStore();
 </script>

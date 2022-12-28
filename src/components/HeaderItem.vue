@@ -8,39 +8,59 @@
     </router-link>
 
     <div class="naviagtion-links">
-      <router-link to="/" :class="{ active: $route.name === 'home' }">{{ $t('header.home') }}</router-link>
-      <router-link to="/allPlayList" :class="{ active: $route.meta.musicHall }">{{ $t('header.discover')
+      <router-link to="/" :class="{ active: $route.name === 'home' }">{{
+        $t("header.home")
       }}</router-link>
-      <router-link to="/library" :class="{ active: $route.name === 'library' }">{{ $t('header.profile') }}</router-link>
+      <router-link
+        to="/allPlayList"
+        :class="{ active: $route.meta.musicHall }"
+        >{{ $t("header.discover") }}</router-link
+      >
+      <router-link
+        to="/library"
+        :class="{ active: $route.name === 'library' }"
+        >{{ $t("header.profile") }}</router-link
+      >
     </div>
     <div class="right-part">
       <div class="search-box">
         <div class="container" :class="{ active: inputFocus }">
           <div class="input">
-            <input v-model="keyWord" type="search" :placeholder="inputFocus ? '' : '搜索'" @focus="inputFocus = true"
-              @blur="inputFocus = false" @keydown="toSearch" />
+            <input
+              v-model="keyWord"
+              type="search"
+              :placeholder="inputFocus ? '' : '搜索'"
+              @focus="inputFocus = true"
+              @blur="inputFocus = false"
+              @keydown="toSearch"
+            />
           </div>
           <img src="../assets/icons/search.svg" />
         </div>
       </div>
-      <img class="avator" :src="isLogin == true ? store.state.user?.avatarUrl : 'login.png'" alt="" loading="lazy"
-        @click="showUserProfileMenu" />
+      <img
+        class="avator"
+        :src="isLogin == true ? store.state.user?.avatarUrl : 'login.png'"
+        alt=""
+        loading="lazy"
+        @click="showUserProfileMenu"
+      />
     </div>
   </header>
   <context-menu ref="userProfileMenu">
-    <div class="item">
+    <div class="item" @click="toSetting">
       <img src="../assets/icons/settings.svg" alt="" />
-      {{ $t('profile.userProfileMenu.settings') }}
+      {{ $t("profile.userProfileMenu.settings") }}
     </div>
 
     <div v-if="!isLogin" class="item" @click="toLogin">
       <img src="../assets/icons/login.svg" alt="" />
-      {{ $t('login.login') }}
+      {{ $t("login.login") }}
     </div>
 
     <div v-if="isLogin" class="item" @click="toLogout">
       <img src="../assets/icons/logout.svg" alt="" />
-      {{ $t('profile.userProfileMenu.logout') }}
+      {{ $t("profile.userProfileMenu.logout") }}
     </div>
   </context-menu>
 </template>
@@ -63,12 +83,12 @@ const data = reactive({
 });
 
 let isLogin = computed(() => {
-  return store.state.isLogin
-})
+  return store.state.isLogin;
+});
 
 const toLogout = () => {
-  store.dispatch('toLogout')
-}
+  store.dispatch("toLogout");
+};
 
 const userProfileMenu = ref();
 
@@ -92,7 +112,13 @@ const toLogin = () => {
   router.push({
     path: "/login",
   });
-}
+};
+
+const toSetting = () => {
+  router.push({
+    path: "/setting",
+  });
+};
 
 const { inputFocus, keyWord } = toRefs(data);
 </script>
