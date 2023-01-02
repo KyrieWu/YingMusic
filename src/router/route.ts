@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
+import Home from '@/views/Home.vue';
 import store from "@/store";
 import { getToken } from '@/utils/token'
 
@@ -10,7 +11,7 @@ export const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'home',
-        component: () => import('@/views/Home.vue'),
+        component: Home,
         meta: {
             keepAlive: true
         }

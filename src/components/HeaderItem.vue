@@ -1,11 +1,9 @@
 <template>
   <header>
-    <router-link to="/" style="text-decoration: none">
-      <div class="navigation-logo">
-        <img src="/music.png" alt="" />
-        <p>YingMusic</p>
-      </div>
-    </router-link>
+    <div class="navigation-logo">
+      <img src="/music.png" @click="toHome" />
+      <p @click="toHome">YingMusic</p>
+    </div>
 
     <div class="naviagtion-links">
       <router-link to="/" :class="{ active: $route.name === 'home' }">{{
@@ -86,6 +84,10 @@ let isLogin = computed(() => {
   return store.state.isLogin;
 });
 
+const toHome = () => {
+  router.push("/");
+};
+
 const toLogout = () => {
   store.dispatch("toLogout");
 };
@@ -161,12 +163,12 @@ header {
   flex: 1;
   display: flex;
   align-items: center;
-  cursor: pointer;
 
   img {
-    height: 50px;
-    width: 50px;
+    height: 5rem;
+    width: 5rem;
     display: inline-block;
+    cursor: pointer;
   }
 
   p {
@@ -175,6 +177,7 @@ header {
     user-select: none;
     font-weight: 700;
     display: inline-block;
+    cursor: pointer;
   }
 }
 
@@ -189,7 +192,7 @@ header {
   display: flex;
   justify-content: center;
   user-select: none;
-  padding-left: 21.5rem;
+  //padding-left: 21.5rem;
 
   a {
     -webkit-app-region: no-drag;
@@ -223,58 +226,58 @@ header {
   }
 }
 
-.search-box {
-  display: flex;
-  justify-content: flex-end;
-
-  .container {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    background: var(--color-secondary-bg-for-transparent);
-    border-radius: 8px;
-    width: 200px;
-
-    img {
-      height: 15px;
-      width: 15px;
-      color: var(--color-text);
-      opacity: 0.28;
-
-      margin: {
-        left: 8px;
-        right: 4px;
-      }
-    }
-
-    input {
-      font-size: 16px;
-      border: none;
-      background: transparent;
-      width: 96%;
-      font-weight: 600px;
-      margin-left: 5px;
-      margin-top: -1px;
-      color: var(--color-text);
-    }
-  }
-
-  .active {
-    background: var(--color-secondary-bg-for-transparent);
-
-    input,
-    img {
-      opacity: 1;
-      color: var(--color-primary);
-    }
-  }
-}
-
 .right-part {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  .search-box {
+    display: flex;
+    justify-content: flex-end;
+
+    .container {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      background: var(--color-secondary-bg-for-transparent);
+      border-radius: 8px;
+      width: 200px;
+
+      img {
+        height: 15px;
+        width: 15px;
+        color: var(--color-text);
+        opacity: 0.28;
+
+        margin: {
+          left: 8px;
+          right: 4px;
+        }
+      }
+
+      input {
+        font-size: 16px;
+        border: none;
+        background: transparent;
+        width: 96%;
+        font-weight: 600px;
+        margin-left: 5px;
+        margin-top: -1px;
+        color: var(--color-text);
+      }
+    }
+
+    .active {
+      background: var(--color-secondary-bg-for-transparent);
+
+      input,
+      img {
+        opacity: 1;
+        color: var(--color-primary);
+      }
+    }
+  }
 
   .avator {
     user-select: none;
