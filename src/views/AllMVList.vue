@@ -1,28 +1,48 @@
 <template>
-  <div class="MV-container">
+  <div class="allMV_container">
     <div class="head">
       <div class="panel">
-        <div class="categorie-content">
+        <div class="categorie_content">
           <div class="categories">地区</div>
-          <div class="categories-list">
+          <div class="categories_list">
             <div class="item">
-              <a class="item_name" :class="{ active: area === '' }" @click="area = ''">热门</a>
+              <a
+                class="item_name"
+                :class="{ active: area === '' }"
+                @click="area = ''"
+                >热门</a
+              >
             </div>
             <div class="item" v-for="(item, index) in mvArea" :key="index">
-              <a class="item_name" :class="{ active: area === `${item}` }" @click="area = `${item}`">{{ item }}</a>
+              <a
+                class="item_name"
+                :class="{ active: area === `${item}` }"
+                @click="area = `${item}`"
+                >{{ item }}</a
+              >
             </div>
           </div>
         </div>
       </div>
       <div class="panel">
-        <div class="categorie-content">
+        <div class="categorie_content">
           <div class="categories">分类</div>
-          <div class="categories-list">
+          <div class="categories_list">
             <div class="item">
-              <a class="item_name" :class="{ active: type === '' }" @click="type = ''">热门</a>
+              <a
+                class="item_name"
+                :class="{ active: type === '' }"
+                @click="type = ''"
+                >热门</a
+              >
             </div>
             <div class="item" v-for="(item, index) in mvType" :key="index">
-              <a class="item_name" :class="{ active: type === `${item}` }" @click="type = `${item}`">{{ item }}</a>
+              <a
+                class="item_name"
+                :class="{ active: type === `${item}` }"
+                @click="type = `${item}`"
+                >{{ item }}</a
+              >
             </div>
           </div>
         </div>
@@ -31,7 +51,13 @@
         <div class="order" :class="{ active: order == '' }" @click="order = ''">
           上升最快
         </div>
-        <div class="order" :class="{ active: order == item }" v-for="item in mvOrder" :key="item" @click="order = item">
+        <div
+          class="order"
+          :class="{ active: order == item }"
+          v-for="item in mvOrder"
+          :key="item"
+          @click="order = item"
+        >
           {{ item }}
         </div>
       </div>
@@ -142,22 +168,17 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1500px) {
-  .MV-container {
-    min-width: 1487px;
-  }
-}
-
-.MV-container {
-  width: 100vw;
+.allMV_container {
   margin-top: 138px;
-  padding-top: 4rem;
-
+  padding: {
+    top: 1rem;
+    left: 10vw;
+    right: 10vw;
+    bottom: 10rem;
+  }
   .head {
-    width: 76%;
-    margin: 0 auto;
+    width: 100%;
     position: relative;
-    margin-left: 21.5rem;
 
     .panel {
       width: 100%;
@@ -166,19 +187,18 @@ onMounted(() => {
       //background-color: var(--color-secondary-bg);
       color: var(--color-text);
 
-      .categorie-content {
+      .categorie_content {
         display: flex;
 
         .categories {
           font-size: 24px;
           font-weight: 700;
           opacity: 0.68;
-          margin-left: 24px;
           min-width: 24px;
           height: 26px;
         }
 
-        .categories-list {
+        .categories_list {
           margin-left: 3rem;
           display: flex;
           flex-wrap: wrap;
@@ -199,6 +219,8 @@ onMounted(() => {
               text-decoration: none;
               border-radius: 10px;
               padding: 5px;
+              padding-right: 10px;
+              padding-left: 10px;
 
               &:hover {
                 background-color: var(--color-primary-bg);
@@ -254,18 +276,25 @@ onMounted(() => {
   }
 
   .content {
-    width: 90%;
-    //height: 75%;
-    margin: 0 auto;
-    margin-top: 2rem;
-
     .title {
       font-size: 2.5rem;
       font-weight: 600;
       color: var(--color-text);
-      margin-left: 12rem;
+      margin-left: 1rem;
       margin-top: 5rem;
+      margin-bottom: 2rem;
     }
+  }
+}
+@media (max-width: 1336px) {
+  .allMV_container {
+    padding: 0 5vw;
+  }
+}
+
+@media (max-width: 1500px) {
+  .allMV_container {
+    min-width: 1492px;
   }
 }
 </style>

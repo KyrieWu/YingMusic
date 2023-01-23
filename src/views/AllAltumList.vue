@@ -1,11 +1,16 @@
 <template>
-  <div class="allAlbum-container">
+  <div class="allAlbum_container">
     <div class="head">
       <div class="panel">
-        <div class="categorie-content">
-          <div class="categories-list">
+        <div class="categorie_content">
+          <div class="categories_list">
             <div class="item" v-for="(item, index) in altumAreas" :key="index">
-              <a class="item_name" :class="{ active: area === index }" @click="area = index">{{ item }}</a>
+              <a
+                class="item_name"
+                :class="{ active: area === index }"
+                @click="area = index"
+                >{{ item }}</a
+              >
             </div>
           </div>
         </div>
@@ -115,22 +120,18 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1500px) {
-  .allAlbum-container {
-    min-width: 1487px;
-  }
-}
-
-.allAlbum-container {
+.allAlbum_container {
   margin-top: 138px;
-  padding-top: 40px;
-  width: 100vw;
+  padding: {
+    top: 1rem;
+    left: 10vw;
+    right: 10vw;
+    bottom: 10rem;
+  }
 
   .head {
-    width: 75vw;
-    margin: 0 auto;
+    width: 100%;
     position: relative;
-    margin-left: 24rem;
 
     .panel {
       width: 100%;
@@ -139,11 +140,19 @@ onMounted(() => {
       //background-color: var(--color-secondary-bg);
       color: var(--color-text);
 
-      .categorie-content {
+      .categorie_content {
         display: flex;
 
-        .categories-list {
-          margin-left: 3rem;
+        .categories {
+          font-size: 24px;
+          font-weight: 700;
+          opacity: 0.68;
+          min-width: 24px;
+          height: 26px;
+        }
+
+        .categories_list {
+          //margin-left: 3rem;
           display: flex;
           flex-wrap: wrap;
 
@@ -155,7 +164,7 @@ onMounted(() => {
             font-size: 16px;
             transition: 0.2s;
             min-width: 50px;
-            margin-left: 3rem;
+            margin-right: 3rem;
 
             .item_name {
               display: block;
@@ -163,6 +172,8 @@ onMounted(() => {
               text-decoration: none;
               border-radius: 10px;
               padding: 5px;
+              padding-right: 10px;
+              padding-left: 10px;
 
               &:hover {
                 background-color: var(--color-primary-bg);
@@ -186,16 +197,25 @@ onMounted(() => {
   }
 
   .album_content {
-    width: 80%;
-    margin: auto;
-
     .title {
       font-size: 2.5rem;
       font-weight: 600;
       color: var(--color-text);
-      margin-left: 4rem;
+      margin-left: 1rem;
       margin-top: 5rem;
+      margin-bottom: 2rem;
     }
+  }
+}
+
+@media (max-width: 1336px) {
+  .allAlbum_container {
+    padding: 0 5vw;
+  }
+}
+@media (max-width: 1500px) {
+  .allAlbum_container {
+    min-width: 1487px;
   }
 }
 </style>

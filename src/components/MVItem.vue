@@ -4,25 +4,34 @@
       <router-link :to="{ path: '/mvDetail', query: { id: item.id } }">
         <div class="play">
           <div class="playIcon">
-            <img src="https://y.qq.com/ryqq/static/media/cover_play@2x.53a26efb.png?max_age=2592000" alt="" />
+            <img
+              src="https://y.qq.com/ryqq/static/media/cover_play@2x.53a26efb.png?max_age=2592000"
+              alt=""
+            />
           </div>
           <div class="img">
-            <img v-lazy="item.picUrl" :alt="item.name" />
+            <img :src="getImageUrl(item)" :alt="item.name" loading="lazy" />
           </div>
         </div>
       </router-link>
 
       <div class="discription">
-        <router-link class="des_title" :to="{ path: '/mvDetail', query: { id: item.id } }" :title="item.name">{{
-            item.name
-        }}</router-link>
-        <router-link v-if="item.artistName" :to="{ path: '/artistDetail', query: { id: item.artistId } }"
-          style="font-size: 12px; opacity: 0.7">{{ item.artistName }}</router-link>
+        <router-link
+          class="des_title"
+          :to="{ path: '/mvDetail', query: { id: item.id } }"
+          :title="item.name"
+          >{{ item.name }}</router-link
+        >
+        <router-link
+          v-if="item.artistName"
+          :to="{ path: '/artistDetail', query: { id: item.artistId } }"
+          style="font-size: 12px; opacity: 0.7"
+          >{{ item.artistName }}</router-link
+        >
         <div class="playCount" v-if="item.playCount">
           <span>播放量:&nbsp;{{ (item.playCount / 10000).toFixed(1) }}万</span>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -41,35 +50,28 @@ export interface MVProps {
 }
 
 const { mvList } = defineProps<{ mvList: MVProps[] }>();
+
+const getImageUrl = (mv: any) => {
+  let url = mv.imgurl16v9 ?? mv.cover ?? mv.coverUrl ?? mv.picUrl;
+  return url?.replace("http://", "https://") + "?param=464y260";
+};
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1500px) {
-  .item {
-    flex: unset;
-  }
-}
-
 .content {
-  width: 100%;
-  height: 90%;
-  margin: 0 auto;
-  //margin-top: 5rem;
+  //height: 100%;
   display: flex;
   flex-wrap: wrap;
   //justify-content: center;
 
   .item {
-    width: 19%;
-    height: 15rem;
-    //float: left;
-    margin-bottom: 8rem;
-    border: 0.1px solid transparent;
-    margin-left: 1rem;
+    width: calc(100% / 5);
+    //height: 25rem;
+    margin-bottom: 5rem;
 
     .play {
       width: 100%;
-      height: 100%;
+      height: 80%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -81,17 +83,22 @@ const { mvList } = defineProps<{ mvList: MVProps[] }>();
         width: 6rem;
         height: 6rem;
         position: absolute;
-        z-index: 3;
-        top: 4.5rem;
+        z-index: 5;
+        top: 50%;
+        left: 50%;
+        margin-top: -3rem;
+        margin-left: -3rem;
         opacity: 0;
         transform: scale(0.5);
 
         img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          overflow-clip-margin: content-box;
+          overflow: clip;
           color: #fff;
           opacity: 0.8;
+          transform: scale(1);
 
           &:hover {
             opacity: 1;
@@ -101,8 +108,6 @@ const { mvList } = defineProps<{ mvList: MVProps[] }>();
             transform: scale(0.97);
           }
         }
-
-
       }
 
       .img {
@@ -115,6 +120,9 @@ const { mvList } = defineProps<{ mvList: MVProps[] }>();
           width: 100%;
           height: 100%;
           object-fit: cover;
+
+          transform: scale(1);
+          transition: transform 0.5s ease-in-out;
         }
       }
 
@@ -126,7 +134,6 @@ const { mvList } = defineProps<{ mvList: MVProps[] }>();
         }
 
         .img img {
-          box-shadow: 0px 5px 8px 8px rgba(0, 0, 0, 0.1);
           transform: scale(1.03);
           transition: transform 0.5s ease-in-out;
         }
@@ -149,6 +156,7 @@ const { mvList } = defineProps<{ mvList: MVProps[] }>();
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        margin-bottom: 0.5rem;
 
         &:hover {
           text-decoration: underline;
@@ -156,18 +164,24 @@ const { mvList } = defineProps<{ mvList: MVProps[] }>();
       }
 
       .playCount {
+        margin-top: 0.5rem;
         font-size: 1.2rem;
         color: var(--color-text);
         opacity: 0.7;
       }
     }
-
   }
 
   &::after {
     content: "";
     display: block;
     clear: both;
+  }
+}
+
+@media (max-width: 1500px) {
+  .item {
+    flex: unset;
   }
 }
 </style>

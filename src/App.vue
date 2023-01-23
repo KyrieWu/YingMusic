@@ -9,7 +9,7 @@
     </router-view>
   </main>
   <play-bar v-show="store.state.showPlayerBar"></play-bar>
-  <footer>
+  <footer v-if="$route.path == '/'">
     <Footer />
   </footer>
 </template>

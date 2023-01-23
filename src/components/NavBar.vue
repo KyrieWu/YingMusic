@@ -22,13 +22,13 @@
     >
       {{ $t("nav.charts") }}
     </router-link>
-    <router-link
+    <!-- <router-link
       to="/allFMList"
       class="icon-item"
       :class="{ active: route.name === 'allFMList' }"
     >
       {{ $t("nav.fm") }}
-    </router-link>
+    </router-link> -->
     <router-link
       to="/allMVList"
       class="icon-item"

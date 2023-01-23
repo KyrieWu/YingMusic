@@ -3,8 +3,13 @@
     <div class="search_top">
       <div class="search_top_bg"></div>
       <div class="input" :class="{ active: inputFocus }">
-        <input class="search_input" type="text" v-model="keyword" @focus="inputFocus = true"
-          @blur="inputFocus = false" />
+        <input
+          class="search_input"
+          type="text"
+          v-model="keyword"
+          @focus="inputFocus = true"
+          @blur="inputFocus = false"
+        />
       </div>
       <div class="icon" @click="toSearch">
         <i class="search_icon"></i>
@@ -12,15 +17,22 @@
     </div>
     <div class="search_content">
       <div class="nav">
-        <span class="nav_item" v-for="(item, index) in SearchNav" :key="index" @click="searchType = index"
-          :class="{ active: searchType == index }">{{ item }}</span>
+        <span
+          class="nav_item"
+          v-for="(item, index) in SearchNav"
+          :key="index"
+          @click="searchType = index"
+          :class="{ active: searchType == index }"
+          >{{ item }}</span
+        >
       </div>
       <div class="content">
         <div class="song" v-show="searchType == 1">
           <div class="title">
             共搜索到&nbsp;<span style="color: #c20c0c">{{
-                songList?.length
-            }}</span>&nbsp;首歌
+              songList?.length
+            }}</span
+            >&nbsp;首歌
           </div>
           <div class="mod_songlist">
             <ul class="songlist__header">
@@ -31,33 +43,52 @@
             </ul>
             <ul class="songlist__list">
               <li v-for="(item, index) in songList" :key="item.id">
-                <div class="songlist__item songlist__item--even" :style="{
-                  backgroundColor: index % 2 == 0 ? backColor : none,
-                }">
+                <div
+                  class="songlist__item songlist__item--even"
+                  :style="{
+                    backgroundColor: index % 2 == 0 ? backColor : none,
+                  }"
+                >
                   <div class="songlist__number songlist__number--top">
                     {{ index + 1 }}
                   </div>
                   <div class="songlist__songname">
-                    <span class="songlist__songname_txt"><a :title="item.name" @click="toSongDetail(item)">{{
+                    <span class="songlist__songname_txt"
+                      ><a :title="item.name" @click="toSongDetail(item)">{{
                         item.name
-                    }}</a></span>
+                      }}</a></span
+                    >
 
                     <div class="mod_list_menu">
-                      <a class="list_menu__item list_menu__play" title="播放" @click="playSong(item)"><i
-                          class="list_menu__icon_play"></i></a><a class="list_menu__item list_menu__add"
-                        title="添加到歌单"><i class="list_menu__icon_add"></i></a>
+                      <a
+                        class="list_menu__item list_menu__play"
+                        title="播放"
+                        @click="playSong(item)"
+                        ><i class="list_menu__icon_play"></i></a
+                      ><a
+                        class="list_menu__item list_menu__add"
+                        title="添加到歌单"
+                        ><i class="list_menu__icon_add"></i
+                      ></a>
                     </div>
                   </div>
                   <div class="songlist__artist">
-                    <router-link :to="{
-                      path: '/artistDetail',
-                      query: { id: item.ar[0].id },
-                    }" class="playlist__author" :title="item.ar[0].name">{{ item.ar[0].name }}</router-link>
+                    <router-link
+                      :to="{
+                        path: '/artistDetail',
+                        query: { id: item.ar[0].id },
+                      }"
+                      class="playlist__author"
+                      :title="item.ar[0].name"
+                      >{{ item.ar[0].name }}</router-link
+                    >
                   </div>
                   <div class="songlist__album">
-                    <router-link :to="{ path: '/altumDetail', query: { id: item.al.id } }" :title="item.al.name">{{
-                        item.al.name
-                    }}</router-link>
+                    <router-link
+                      :to="{ path: '/altumDetail', query: { id: item.al.id } }"
+                      :title="item.al.name"
+                      >{{ item.al.name }}</router-link
+                    >
                   </div>
                   <div class="songlist__time">
                     {{ timestampToTime(item.dt) }}
@@ -70,32 +101,36 @@
         <div class="album" v-show="searchType == 10">
           <div class="title">
             共搜索到&nbsp;<span style="color: #c20c0c">{{
-                albumList?.length
-            }}</span>&nbsp;张专辑
+              albumList?.length
+            }}</span
+            >&nbsp;张专辑
           </div>
           <square-item-list :square-items="albumList"></square-item-list>
         </div>
         <div class="artist" v-show="searchType == 100">
           <div class="title">
             共搜索到&nbsp;<span style="color: #c20c0c">{{
-                aritstList?.length
-            }}</span>&nbsp;位歌手
+              aritstList?.length
+            }}</span
+            >&nbsp;位歌手
           </div>
           <aritst-item :artists-infos="aritstList"></aritst-item>
         </div>
         <div class="playlist" v-show="searchType == 1000">
           <div class="title">
             共搜索到&nbsp;<span style="color: #c20c0c">{{
-                playlists?.length
-            }}</span>&nbsp;个歌单
+              playlists?.length
+            }}</span
+            >&nbsp;个歌单
           </div>
           <square-item-list :square-items="playlists"></square-item-list>
         </div>
         <div class="mv" v-show="searchType == 1004">
           <div class="title">
             共搜索到&nbsp;<span style="color: #c20c0c">{{
-                mvList?.length
-            }}</span>&nbsp;部MV
+              mvList?.length
+            }}</span
+            >&nbsp;部MV
           </div>
           <m-v-item :mv-list="mvList"></m-v-item>
         </div>
@@ -114,7 +149,7 @@ import { useStore } from "vuex";
 import { SearchNav } from "@/utils/searchNav";
 import SquareItemList from "@/components/SquareItemList.vue";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
-import AritstItem from "@/components/AritstItem.vue";
+import AritstItem from "@/components/RoundItem.vue";
 import { timestampToTime } from "@/utils/utils";
 
 const route = useRoute();
@@ -478,14 +513,16 @@ onBeforeRouteUpdate((to, from) => {
                     float: left;
 
                     .list_menu__icon_play {
-                      background: url("@/assets/icons/播放\ \(1\).png") no-repeat center/cover;
+                      background: url("@/assets/icons/播放\ \(1\).png")
+                        no-repeat center/cover;
                       width: 40px;
                       height: 40px;
                       display: inline-block;
                     }
 
                     .list_menu__icon_add {
-                      background: url("@/assets/icons/添加.png") no-repeat center/cover;
+                      background: url("@/assets/icons/添加.png") no-repeat
+                        center/cover;
                       width: 39px;
                       height: 39px;
                       display: inline-block;

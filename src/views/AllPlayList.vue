@@ -1,6 +1,6 @@
 <template>
-  <div class="playlist-container">
-    <play-list-categories style="margin-bottom:5rem"></play-list-categories>
+  <div class="allplaylist_container">
+    <play-list-categories style="margin-bottom: 5rem"></play-list-categories>
     <div class="content">
       <square-item-list :square-items="squareItems"></square-item-list>
     </div>
@@ -86,48 +86,27 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1500px) {
-  .recommend-container {
-    min-width: 1487px;
+.allplaylist_container {
+  margin-top: 138px;
+  padding: {
+    top: 1rem;
+    left: 10vw;
+    right: 10vw;
+    bottom: 10rem;
+  }
+  .content {
+    width: 100%;
   }
 }
 
-.playlist-container {
-  margin-top: 138px;
-  width: 100vw;
-
-  .content {
-    width: 90%;
-    margin: 0 auto;
+@media (max-width: 1336px) {
+  .allplaylist_container {
+    padding: 0 5vw;
   }
-
-  // .show_more {
-  //   width: 100%;
-  //   height: 4rem;
-  //   position: relative;
-
-  //   .line {
-  //     width: 100%;
-  //     height: 2px;
-  //     background-color: var(--color-secondary-bg-for-transparent);
-  //     opacity: 0.8;
-  //   }
-
-  //   .title {
-  //     position: absolute;
-  //     width: 10rem;
-  //     height: 100%;
-  //     top: -2rem;
-  //     left: 47%;
-  //     background-color: var(--color-secondary-bg-for-transparent);
-  //     text-align: center;
-  //     font-size: 1.7rem;
-  //     letter-spacing: 2px;
-  //     line-height: 4rem;
-  //     color: var(--color-text);
-  //     border-radius: 10px;
-  //     opacity: 0.8;
-  //   }
-  // }
+}
+@media (max-width: 1500px) {
+  .allplaylist_container {
+    min-width: 1492px;
+  }
 }
 </style>

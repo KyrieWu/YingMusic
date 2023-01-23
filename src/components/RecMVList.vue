@@ -1,6 +1,6 @@
 <template>
   <!-- MV -->
-  <div class="albumlist-container">
+  <div class="recMVList_container">
     <div class="head">
       <h2>MV</h2>
     </div>
@@ -67,45 +67,34 @@ onBeforeMount(() => {
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1500px) {
-  .albumlist-container {
-    min-width: 1487px;
-  }
-}
-
-.albumlist-container {
-  width: 100vw;
-  //height: 55rem;
-  position: relative;
-  display: block;
-  // background: url(https://y.qq.com/ryqq/static/media/bg_detail.bb32b2d1.jpg?max_age=2592000) 50% 0 repeat-x;
-
+.recMVList_container {
   .head {
     width: 100%;
-    height: 6rem;
+    height: 7rem;
     text-align: center;
 
     h2 {
-      line-height: 100px;
-      font-size: 30px;
+      line-height: 7rem;
+      font-size: 2.5rem;
+      font-weight: 600;
       color: var(--color-text);
     }
   }
 
   .nav {
     width: 100%;
-    height: 4.4rem;
+    height: 5rem;
     text-align: center;
     font-size: 16px;
     font-weight: 500;
     position: relative;
     color: var(--color-text);
-    margin-bottom: 4rem;
+    margin-bottom: 10px;
 
     a {
       margin: 0 24px;
       text-decoration: none;
-      line-height: 100px;
+      line-height: 4rem;
 
       &:hover {
         color: var(--color-primary);
@@ -119,14 +108,14 @@ onBeforeMount(() => {
     .showAll {
       position: absolute;
       top: 0px;
-      right: 240px;
+      right: 0;
     }
   }
+}
 
-  .content {
-    width: 90%;
-    height: 84%;
-    margin: 0 auto;
+@media (max-width: 1500px) {
+  .recMVList_container {
+    min-width: 1492px;
   }
 }
 </style>

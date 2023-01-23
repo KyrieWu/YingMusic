@@ -6,5 +6,5 @@ interface SquareItemProps {
     artistName?: string,
     playCount?: number,
     publishTime?: number,
-    routerPath: string
+    routerPath?: string
 }

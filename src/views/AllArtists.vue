@@ -1,37 +1,65 @@
 <template>
-  <div class="artists-container">
+  <div class="allartists_container">
     <div class="head">
       <div class="panel">
-        <div class="categorie-content">
+        <div class="categorie_content">
           <!-- <a class="categories">全部</a> -->
-          <div class="categories-list">
+          <div class="categories_list">
             <div class="item">
-              <a class="item_name" :class="{ active: init === '-1' }" @click="init = '-1'">热门</a>
+              <a
+                class="item_name"
+                :class="{ active: init === '-1' }"
+                @click="init = '-1'"
+                >热门</a
+              >
             </div>
             <div class="item" v-for="(item, index) in Initial" :key="index">
-              <a class="item_name" :class="{ active: init === `${item}` }" @click="init = `${item}`">{{ item }}</a>
+              <a
+                class="item_name"
+                :class="{ active: init === `${item}` }"
+                @click="init = `${item}`"
+                >{{ item }}</a
+              >
             </div>
           </div>
         </div>
       </div>
       <div class="panel">
-        <div class="categorie-content">
+        <div class="categorie_content">
           <!-- <a class="categories">全部</a> -->
-          <div class="categories-list">
-            <div class="item" style="margin-right: 2rem" v-for="(item, index) in TypeValue" :key="index">
-              <a class="item_name" :class="{ active: type === TypeKey[index] }" @click="type = TypeKey[index]">{{ item
-              }}</a>
+          <div class="categories_list">
+            <div
+              class="item"
+              style="margin-right: 2rem"
+              v-for="(item, index) in TypeValue"
+              :key="index"
+            >
+              <a
+                class="item_name"
+                :class="{ active: type === TypeKey[index] }"
+                @click="type = TypeKey[index]"
+                >{{ item }}</a
+              >
             </div>
           </div>
         </div>
       </div>
       <div class="panel">
-        <div class="categorie-content">
+        <div class="categorie_content">
           <!-- <a class="categories">全部</a> -->
-          <div class="categories-list">
-            <div class="item" style="margin-right: 2rem" v-for="(item, index) in AreaValue" :key="index">
-              <a class="item_name" :class="{ active: area === AreeKey[index] }" @click="area = AreeKey[index]">{{ item
-              }}</a>
+          <div class="categories_list">
+            <div
+              class="item"
+              style="margin-right: 2rem"
+              v-for="(item, index) in AreaValue"
+              :key="index"
+            >
+              <a
+                class="item_name"
+                :class="{ active: area === AreeKey[index] }"
+                @click="area = AreeKey[index]"
+                >{{ item }}</a
+              >
             </div>
           </div>
         </div>
@@ -59,7 +87,7 @@ import {
   AreaValue,
   AreeKey,
 } from "@/utils/cateArtistInfo";
-import AritstItem from "@/components/AritstItem.vue";
+import AritstItem from "@/components/RoundItem.vue";
 import LazyMore from "@/components/LazyMore.vue";
 
 let artistsInfos = ref<ArtistsInfo[]>([]);
@@ -128,28 +156,23 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1500px) {
-  .artists-container {
-    min-width: 1487px;
-  }
-}
-
-.artists-container {
+.allartists_container {
   margin-top: 138px;
-  padding-top: 40px;
-  width: 100vw;
-
+  padding: {
+    top: 1rem;
+    left: 10vw;
+    right: 10vw;
+    bottom: 10rem;
+  }
   .panel {
-    width: 76%;
-    margin: 0 auto;
-    //margin-left: 25rem;
-    //border-radius: 10px;
-    padding: 1rem;
+    padding: {
+      top: 1rem;
+      bottom: 1rem;
+    }
 
-    //background-color: var(--color-secondary-bg);
     color: var(--color-text);
 
-    .categorie-content {
+    .categorie_content {
       display: flex;
 
       .categories {
@@ -161,7 +184,7 @@ onMounted(() => {
         height: 26px;
       }
 
-      .categories-list {
+      .categories_list {
         margin-left: 24px;
         display: flex;
         flex-wrap: wrap;
@@ -207,9 +230,21 @@ onMounted(() => {
   }
 
   .content {
-    width: 90%;
-    margin: 0 auto;
+    // width: 90%;
+    // margin: 0 auto;
     margin-top: 5rem;
+  }
+}
+
+@media (max-width: 1336px) {
+  .allartists_container {
+    padding: 0 5vw;
+  }
+}
+
+@media (max-width: 1500px) {
+  .allartists_container {
+    min-width: 1492px;
   }
 }
 </style>

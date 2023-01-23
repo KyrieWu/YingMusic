@@ -1,12 +1,17 @@
 <template>
-  <div class="playlist-container">
-    <div class="playlist-main">
-      <div class="playlist-img">
-        <router-link :to="{ path: '/artistDetail', query: { id: route.query.id } }">
-          <img :src="playListData.artist?.cover" alt="" />
+  <div class="artistDetail_container">
+    <div class="artist_main">
+      <div class="artist_img">
+        <router-link
+          :to="{ path: '/artistDetail', query: { id: route.query.id } }"
+        >
+          <img
+            :src="playListData.artist && getImageUrl(playListData.artist)"
+            alt=""
+          />
         </router-link>
       </div>
-      <div class="playlist-detail">
+      <div class="artist_detail">
         <div class="title">
           <h1>{{ playListData.artist?.name }}</h1>
         </div>
@@ -45,7 +50,10 @@
             <span>播放热门歌曲</span>
           </a>
           <a class="mod_btn" @click="attentionArt">
-            <i class="mod_btn__icon_attention" ref="mod_btn__icon_attention"></i>
+            <i
+              class="mod_btn__icon_attention"
+              ref="mod_btn__icon_attention"
+            ></i>
             <span ref="attention_text">关注</span>
           </a>
           <!-- <a href="" class="mod_btn">
@@ -58,38 +66,87 @@
     <div class="detail_layout" v-if="route.path == '/artistDetail'">
       <div class="detail_layout__main">
         <div class="layout_head">热门歌曲:</div>
-        <router-link :to="{
-          path: '/artistDetail/artistSongs',
-          query: { id: route.query.id },
-        }" class="more">查看全部</router-link>
-        <artist-song-item :hot-song-detail="hotSongDetail"></artist-song-item>
-      </div>
-      <div class="detail_layout__mv" v-if="mvList.length !== 0">
-        <div class="title">MVs:</div>
-        <router-link :to="{
-          path: '/artistDetail/artistMVs',
-          query: { id: route.query.id },
-        }" class="more">查看全部</router-link>
-        <m-v-item :mv-list="mvList"></m-v-item>
-      </div>
-      <div class="detail_layout__album" v-if="squareItems.length !== 0">
-        <div class="title">专辑:</div>
-        <router-link :to="{
-          path: '/artistDetail/artistAlbums',
-          query: { id: route.query.id },
-        }" class="more">查看全部</router-link>
-        <square-item-list :square-items="squareItems"></square-item-list>
-      </div>
-      <div class="detail_layout__simiArt" v-if="simiartistsInfos.length !== 0">
-        <div class="title">相似歌手:</div>
-        <aritst-item :artists-infos="simiartistsInfos"></aritst-item>
+        <router-link
+          :to="{
+            path: '/artistDetail/artistSongs',
+            query: { id: route.query.id },
+          }"
+          class="more"
+          >查看全部</router-link
+        >
+        <div class="mod_songlist">
+          <ul class="songlist__header">
+            <li class="songlist__header_empty"></li>
+            <li class="songlist__header_name">歌名</li>
+            <li class="songlist__header_album">专辑</li>
+            <li class="songlist__header_time">时间</li>
+          </ul>
+          <ul class="songlist__list">
+            <li v-for="(item, index) in hotSongDetail" :key="item.id">
+              <div class="songlist__item">
+                <div class="songlist__number">{{ index + 1 }}</div>
+                <div class="songlist__play">
+                  <a class="list_menu__item list_menu__play" title="play">
+                    <i class="list_menu__icon_play"></i>
+                  </a>
+                </div>
+                <div class="songlist__songname">
+                  <span class="songlist__songname_txt">{{ item.name }}</span>
+                </div>
+
+                <div class="songlist__album">
+                  <router-link to="/albumDetail" :title="item.al.name">
+                    {{ item.al.name }}
+                  </router-link>
+                </div>
+                <div class="songlist__time">{{ timestampToTime(item.dt) }}</div>
+                <div class="songlist__add">
+                  <a class="list_menu__item list_menu__add" title="add">
+                    <i class="list_menu__icon_add"></i>
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="more_show" v-if="
-  route.path == '/artistDetail/artistMVs' ||
-  route.path == '/artistDetail/artistAlbums' ||
-  route.path == '/artistDetail/artistSongs'
-    ">
+    <div class="related_playlist" v-if="mvList.length !== 0">
+      <div class="title">MVs:</div>
+      <router-link
+        :to="{
+          path: '/artistDetail/artistMVs',
+          query: { id: route.query.id },
+        }"
+        class="more"
+        >查看全部</router-link
+      >
+      <m-v-item :mv-list="mvList"></m-v-item>
+    </div>
+    <div class="related_playlist" v-if="squareItems.length !== 0">
+      <div class="title">专辑:</div>
+      <router-link
+        :to="{
+          path: '/artistDetail/artistAlbums',
+          query: { id: route.query.id },
+        }"
+        class="more"
+        >查看全部</router-link
+      >
+      <square-item-list :square-items="squareItems"></square-item-list>
+    </div>
+    <div class="related_playlist" v-if="simiartistsInfos.length !== 0">
+      <div class="title">相似歌手:</div>
+      <aritst-item :artists-infos="simiartistsInfos"></aritst-item>
+    </div>
+    <div
+      class="more_show"
+      v-if="
+        route.path == '/artistDetail/artistMVs' ||
+        route.path == '/artistDetail/artistAlbums' ||
+        route.path == '/artistDetail/artistSongs'
+      "
+    >
       <router-view></router-view>
     </div>
   </div>
@@ -112,7 +169,8 @@ import { getArtistMV } from "@/api/mv";
 import SquareItemList from "@/components/SquareItemList.vue";
 import { getArtAlbum } from "@/api/altum";
 import ArtistSongItem from "@/components/ArtistSongItem.vue";
-import AritstItem from "@/components/AritstItem.vue";
+import AritstItem from "@/components/RoundItem.vue";
+import { timestampToTime } from "@/utils/utils";
 
 interface HotSong {
   artist: object;
@@ -294,12 +352,25 @@ const attentionArt = async () => {
     }
   }
 };
+
+const getImageUrl = (item: any) => {
+  if (item.img1v1Url) {
+    let img1v1ID = item.img1v1Url.split("/");
+    img1v1ID = img1v1ID[img1v1ID.length - 1];
+    if (img1v1ID === "5639395138885805.jpg") {
+      // 没有头像的歌手，网易云返回的img1v1Url并不是正方形的 😅😅😅
+      return "https://p2.music.126.net/VnZiScyynLG7atLIZ2YPkw==/18686200114669622.jpg?param=512y512";
+    }
+  }
+  let img = item.img1v1Url || item.picUrl || item.coverImgUrl || item.cover;
+  return `${img?.replace("http://", "https://")}?param=512y512`;
+};
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1750px) {
-  .playlist-container {
-    min-width: 1727px;
+@media (max-width: 1500px) {
+  .artistDetail_container {
+    min-width: 1492px;
   }
 
   .playlist-img,
@@ -318,56 +389,53 @@ const attentionArt = async () => {
   }
 }
 
-.playlist-container {
-  width: 100vw;
-  //padding: 0 15vw;
-  margin: 0 auto;
+.artistDetail_container {
   margin-top: 64px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
 
-  .playlist-main {
-    width: 80%;
+  padding: {
+    top: 2rem;
+    left: 10vw;
+    right: 10vw;
+    bottom: 10rem;
+  }
+
+  .artist_main {
     height: 35rem;
     position: relative;
-    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: row;
 
-    .playlist-img {
-      width: 30%;
-      height: 85%;
-      float: left;
-      margin-top: 50px;
+    .artist_img {
+      margin-top: 18px;
 
       img {
-        width: 68%;
-        height: 100%;
-        margin-left: 50px;
+        height: 300px;
+        width: 300px;
         border-radius: 50%;
+        // margin-right: 56px;
+        display: block;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 16px -8px;
         object-fit: cover;
       }
     }
 
-    .playlist-detail {
-      width: 60%;
-      height: 71.5%;
-      padding-top: 50px;
-      float: left;
+    .artist_detail {
+      padding-top: 28px;
+      margin-left: 3rem;
 
       .title {
-        font-size: 1.5rem;
+        margin-left: 0.8rem;
+        font-size: 4rem;
         color: var(--color-text);
-
-        h1 {
-          font-weight: 600;
-        }
+        margin-bottom: 2rem;
+        font-weight: 600;
+        line-height: 4rem;
       }
 
       .art {
         font-size: 18px;
         color: var(--color-text);
+        //margin-bottom: 3rem;
 
         .icon_singer {
           display: block;
@@ -375,7 +443,8 @@ const attentionArt = async () => {
           height: 18px;
           background: url(@/assets/icons/作者.png) no-repeat center/cover;
           float: left;
-          margin-top: 3px;
+          //margin-top: 3px;
+          margin-left: 10px;
           margin-right: 10px;
         }
 
@@ -393,6 +462,9 @@ const attentionArt = async () => {
         padding: 0;
         font-size: 14px;
         display: block;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        color: var(--color-text);
 
         .data_info_item {
           margin-bottom: 8px;
@@ -409,12 +481,41 @@ const attentionArt = async () => {
         }
       }
 
+      .mod_about {
+        margin-top: 2rem;
+        margin-left: 10px;
+        color: var(--color-text);
+
+        .about_tit {
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+
+        .about_cont {
+          height: 4.2rem;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          font-size: 14px;
+          opacity: 0.68;
+          margin-top: 10px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          overflow: hidden;
+          cursor: pointer;
+          white-space: pre-line;
+        }
+      }
+
       .data_actions {
-        margin-top: 10px;
         font-size: 14px;
+        margin-left: 10px;
+        margin-top: 4rem;
 
         .mod_btn_blue {
-          border-radius: 5px;
+          border-radius: 0.8rem;
           font-size: 14px;
           margin-right: 6px;
           padding: 0 23px;
@@ -438,7 +539,6 @@ const attentionArt = async () => {
           }
 
           &:hover {
-            background-color: var(--color-primary);
             text-decoration: none;
             transform: scale(1.05);
             transition: transform 0.3s ease-in-out;
@@ -451,7 +551,7 @@ const attentionArt = async () => {
         }
 
         .mod_btn {
-          border-radius: 5px;
+          border-radius: 0.8rem;
           font-size: 14px;
           margin-right: 6px;
           padding: 0 23px;
@@ -465,21 +565,13 @@ const attentionArt = async () => {
           border: 1px solid #333;
           margin-right: 10px;
 
-          .mod_btn__icon_attention {
-            background: url("@/assets/icons/加关注\(人\).png") no-repeat center/cover;
+          .mod_btn__icon_like {
+            background: url("@/assets/icons/加关注\(人\).png") no-repeat
+              center/cover;
             float: left;
             width: 25px;
             height: 25px;
             margin-top: 5px;
-            margin-right: 4px;
-          }
-
-          .mod_btn__icon_commend {
-            background: url("@/assets/icons/评论.png") no-repeat center/cover;
-            float: left;
-            width: 25px;
-            height: 25px;
-            margin-top: 6px;
             margin-right: 4px;
           }
 
@@ -497,123 +589,254 @@ const attentionArt = async () => {
   }
 
   .detail_layout {
-    width: 80%;
-    //height: 70rem;
-    margin-left: 2rem;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    margin-top: 3rem;
 
     li {
       list-style: none;
-      display: block;
     }
 
     .detail_layout__main {
       //float: left;
       width: 100%;
-      //margin-bottom: 30rem;
-      height: 70rem;
-      position: relative;
 
-      .layout_head {
-        font-size: 2.5rem;
-        margin-left: 4rem;
-        color: var(--color-text);
-      }
+      .mod_songlist {
+        width: 100%;
+        height: 100%;
 
-      .more {
-        position: absolute;
-        top: 0;
-        right: 6rem;
-        font-size: 1.4rem;
-        text-decoration: none;
+        .songlist__header {
+          font-size: 1.4rem;
+          display: flex;
+          flex-direction: row;
+          height: 5rem;
+          width: 100%;
+          line-height: 50px;
+          color: var(--color-text);
 
-        &:hover {
-          color: var(--color-primary);
+          .songlist__header_empty {
+            width: 6%;
+            height: 100%;
+            margin-left: 1rem;
+          }
+          .songlist__header_name {
+            width: 57%;
+            height: 100%;
+            display: inline-block;
+          }
+
+          .songlist__header_album {
+            width: 17%;
+            height: 100%;
+            display: inline-block;
+          }
+
+          .songlist__header_time {
+            width: 15%;
+            height: 100%;
+            text-align: end;
+          }
+        }
+
+        .songlist__list {
+          font-size: 1.4rem;
+          width: 100%;
+          display: block;
+
+          .songlist__item {
+            width: 100%;
+            height: 5rem;
+            position: relative;
+            display: flex;
+            line-height: 50px;
+            color: var(--color-text);
+            overflow: hidden;
+            border-radius: 1rem;
+
+            .songlist__number {
+              opacity: 0.7;
+              width: 1%;
+              height: 100%;
+              margin-left: 1rem;
+            }
+            .songlist__play {
+              width: 5%;
+              height: 100%;
+              opacity: 0;
+
+              .list_menu__item {
+                width: 4rem;
+                height: 4rem;
+                background-color: transparent;
+                display: block;
+
+                .list_menu__icon_play {
+                  background: url("@/assets/icons/播放-blue.png") no-repeat
+                    center/cover;
+                  width: 4rem;
+                  height: 4rem;
+                  display: inline-block;
+                  margin-top: 0.5rem;
+                  margin-left: 1.5rem;
+
+                  &:active {
+                    transform: scale(0.95);
+                  }
+                }
+
+                &:hover {
+                  transform: scale(1.05);
+                }
+              }
+            }
+
+            .songlist__songname {
+              width: 57%;
+              height: 100%;
+              position: relative;
+              font-size: 1.8rem;
+              font-weight: 600;
+              user-select: none;
+
+              .songlist__songname_txt {
+                max-width: 72%;
+                box-sizing: border-box;
+                float: left;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 56%;
+                margin-right: 8px;
+                white-space: nowrap;
+                font-size: 14px;
+                display: block;
+              }
+            }
+
+            .songlist__album {
+              width: 17%;
+              height: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+
+            .songlist__time {
+              width: 15%;
+              height: 100%;
+              opacity: 0.7;
+              text-align: end;
+            }
+
+            .songlist__add {
+              width: 4%;
+              height: 100%;
+              opacity: 0;
+
+              .list_menu__item {
+                width: 4rem;
+                height: 4rem;
+                background-color: transparent;
+                display: block;
+                position: relative;
+
+                .list_menu__icon_add {
+                  background: url("@/assets/icons/添加-blue.png") no-repeat
+                    center/cover;
+                  width: 4rem;
+                  height: 4rem;
+                  display: inline-block;
+                  margin-top: 0.5rem;
+                  margin-left: 1rem;
+
+                  &:active {
+                    transform: scale(0.95);
+                  }
+                }
+
+                &:hover {
+                  transform: scale(1.05);
+                }
+              }
+            }
+            a {
+              color: var(--color-text);
+
+              &:hover {
+                color: var(--color-primary);
+                text-decoration: none;
+              }
+            }
+
+            &:hover {
+              background-color: var(--color-secondary-bg-for-transparent);
+
+              .songlist__add,
+              .songlist__play {
+                opacity: 1;
+              }
+            }
+          }
         }
       }
     }
 
-    .detail_layout__mv {
-      width: 100%;
-      height: 45rem;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 10rem;
-      position: relative;
+    .detail_layout_other {
+      font-size: 14px;
+      width: 25%;
+      //float: left;
+      color: var(--color-text);
+      line-height: 21px;
+      margin-left: 5px;
 
-      .title {
-        font-size: 2.5rem;
-        font-weight: 600;
-        color: var(--color-text);
-        margin-left: 2rem;
-        margin-bottom: 2rem;
-        //margin-top: 5rem;
+      .about_cont {
+        height: 80px;
+        width: 100%;
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: --webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
       }
 
-      .more {
-        position: absolute;
-        top: 2rem;
-        right: 4rem;
-        font-size: 1.4rem;
-        text-decoration: none;
+      .about_cont_up {
+        height: 80px;
+      }
+
+      .about_more {
+        display: block;
+        margin-top: 15px;
 
         &:hover {
           color: var(--color-primary);
+          text-decoration: none;
         }
       }
-    }
 
-    .detail_layout__album {
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      margin-bottom: 4rem;
-
-      .title {
-        font-size: 2.5rem;
-        font-weight: 600;
-        color: var(--color-text);
-        margin-left: 2rem;
-      }
-
-      .more {
-        position: absolute;
-        top: 2rem;
-        right: 4rem;
-        font-size: 1.4rem;
-        text-decoration: none;
+      .pack_up {
+        display: block;
+        margin-top: 15px;
 
         &:hover {
           color: var(--color-primary);
+          text-decoration: none;
         }
-      }
-    }
-
-    .detail_layout__simiArt {
-      width: 100%;
-      height: 45rem;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-
-      position: relative;
-
-      .title {
-        font-size: 2.5rem;
-        font-weight: 600;
-        color: var(--color-text);
-        margin-left: 2rem;
-        margin-bottom: 3rem;
       }
     }
   }
 
-  .more_show {
-    width: 79%;
+  .related_playlist {
+    width: 100%;
+    margin-top: 5rem;
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-left: 1rem;
+      margin-bottom: 2.5rem;
+    }
   }
 }
 </style>

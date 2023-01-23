@@ -1,13 +1,18 @@
 <template>
-  <div class="topList-container">
+  <div class="topList_container">
     <div class="left">
       <div class="left_content">
         <h2>云音乐特色榜</h2>
         <ul class="left_ul">
-          <li class="left_item" v-for="item in cateToplist.slice(0, 4)" :key="item.id" @click="toplistInfo = item"
-            :class="{ active: toplistInfo == item }">
+          <li
+            class="left_item"
+            v-for="item in cateToplist.slice(0, 4)"
+            :key="item.id"
+            @click="toplistInfo = item"
+            :class="{ active: toplistInfo == item }"
+          >
             <div class="item_left">
-              <img :src="item.coverImgUrl" :alt="item.name" />
+              <img :src="getImageUrl(item)" :alt="item.name" loading="lazy" />
             </div>
             <div class="item_right">
               <p class="name">{{ item.name }}</p>
@@ -17,10 +22,15 @@
         </ul>
         <h2>全球媒体榜</h2>
         <ul class="left_ul">
-          <li class="left_item" v-for="item in cateToplist.slice(4)" :key="item.id" @click="toplistInfo = item"
-            :class="{ active: toplistInfo == item }">
+          <li
+            class="left_item"
+            v-for="item in cateToplist.slice(4)"
+            :key="item.id"
+            @click="toplistInfo = item"
+            :class="{ active: toplistInfo == item }"
+          >
             <div class="item_left">
-              <img v-lazy="item.coverImgUrl" :alt="item.name" />
+              <img :src="getImageUrl(item)" :alt="item.name" loading="lazy" />
             </div>
             <div class="item_right">
               <p class="name">{{ item.name }}</p>
@@ -31,20 +41,23 @@
       </div>
     </div>
     <div class="right">
-      <div class="playlist-main">
-        <div class="playlist-img">
-          <img :src="toplistInfo?.coverImgUrl" :alt="toplistInfo?.name" />
+      <div class="playlist_main">
+        <div class="playlist_img">
+          <img
+            :src="toplistInfo && getBigImgUrl(toplistInfo)"
+            :alt="toplistInfo?.name"
+          />
         </div>
-        <div class="playlist-detail">
+        <div class="playlist_detail">
           <div class="title">
             <h1>{{ toplistInfo?.name }}</h1>
           </div>
           <ul class="data_info">
             <li class="data_info_item">
-              <div class="data_tag_box">
+              <div class="data_tag_box" style="color: var(--color-text)">
                 最近更新:&nbsp;
                 {{ timestampToDate(toplistInfo?.updateTime) }}&nbsp;({{
-                    toplistInfo?.updateFrequency
+                  toplistInfo?.updateFrequency
                 }})
               </div>
             </li>
@@ -58,10 +71,6 @@
               <i class="mod_btn__icon_like"></i>
               <span>添加到歌单</span>
             </a>
-            <a class="mod_btn">
-              <i class="mod_btn__icon_commend"></i>
-              <span>评论</span>
-            </a>
           </div>
         </div>
       </div>
@@ -69,6 +78,8 @@
         <div class="detail_layout__main">
           <div class="mod_songlist">
             <ul class="songlist__header">
+              <li class="songlist__header_empty"></li>
+              <li class="songlist__header_empty"></li>
               <li class="songlist__header_name">歌曲</li>
               <li class="songlist__header_author">歌手</li>
               <li class="songlist__header_time">时长</li>
@@ -79,26 +90,47 @@
                   <div class="songlist__number">
                     {{ index + 1 }}
                   </div>
+                  <div class="songlist_play">
+                    <a
+                      class="list_menu__item styles.list_menu__play"
+                      title="play"
+                    >
+                      <i class="list_menu__icon_play"></i>
+                    </a>
+                  </div>
                   <div class="songlist__songname">
-                    <img class="song_icon" v-lazy="item.al.picUrl" />
-                    <span class="songlist__songname_txt"><a :title="item.name" @click="toSongDetail(item)">{{
+                    <img
+                      class="song_icon"
+                      :src="getImageUrl(item.al)"
+                      loading="lazy"
+                    />
+                    <span class="songlist__songname_txt"
+                      ><a :title="item.name" @click="toSongDetail(item)">{{
                         item.name
-                    }}</a></span>
-
-                    <div class="mod_list_menu">
-                      <a class="list_menu__item list_menu__play" title="播放" @click="playSong(item)"><i
-                          class="list_menu__icon_play"></i></a>
-                      <a class="list_menu__item list_menu__add" title="添加到歌单"> <i class="list_menu__icon_add"></i></a>
-                    </div>
+                      }}</a></span
+                    >
                   </div>
                   <div class="songlist__artist">
-                    <router-link :to="{
-                      path: '/artistDetail',
-                      query: { id: item.ar[0].id },
-                    }" class="playlist__author" :title="item.ar[0].name">{{ item.ar[0].name }}</router-link>
+                    <router-link
+                      :to="{
+                        path: '/artistDetail',
+                        query: { id: item.ar[0].id },
+                      }"
+                      class="playlist__author"
+                      :title="item.ar[0].name"
+                      >{{ item.ar[0].name }}</router-link
+                    >
                   </div>
                   <div class="songlist__time">
                     {{ timestampToTime(item.dt) }}
+                  </div>
+                  <div class="songlist_add">
+                    <a
+                      class="list_menu__item list_menu__add"
+                      title="add to playlist"
+                    >
+                      <i class="list_menu__icon_add"></i>
+                    </a>
                   </div>
                 </div>
               </li>
@@ -119,6 +151,7 @@ import { onBeforeMount, ref, watch } from "vue";
 import { timestampToDate, timestampToTime } from "@/utils/utils";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import lazy from "@/utils/lazy";
 
 const store = useStore();
 const router = useRouter();
@@ -136,10 +169,10 @@ const playAllSong = (songs: SongInfo[]): void => {
 };
 
 const addToPlaylist = () => {
-  trackInfos.value?.forEach(item => {
-    store.commit('ADDTOPLAYLIST', item)
-  })
-}
+  trackInfos.value?.forEach((item) => {
+    store.commit("ADDTOPLAYLIST", item);
+  });
+};
 
 const toSongDetail = (item: SongInfo) => {
   router.push({
@@ -159,9 +192,18 @@ watch(
 const getTracks = async () => {
   let trackLists = (await getPlayListTrack(
     Number(toplistInfo.value?.id),
-    30
+    50
   )) as unknown as SongData;
   trackInfos.value = trackLists.songs;
+};
+
+const getImageUrl = (item: any) => {
+  let img = item.img1v1Url || item.picUrl || item.coverImgUrl;
+  return `${img?.replace("http://", "https://")}?param=120y120`;
+};
+const getBigImgUrl = (item: any) => {
+  let img = item.img1v1Url || item.picUrl || item.coverImgUrl;
+  return `${img?.replace("http://", "https://")}?param=512y512`;
 };
 
 onBeforeMount(async () => {
@@ -172,18 +214,13 @@ onBeforeMount(async () => {
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 1500px) {
-  .topList-container {
-    min-width: 1487px;
-  }
-}
-
-.topList-container {
+.topList_container {
   margin-top: 138px;
-
   padding: {
-    right: 20vw;
-    left: 20vw;
+    top: 1rem;
+    left: 10vw;
+    right: 10vw;
+    bottom: 10rem;
   }
 
   display: flex;
@@ -195,12 +232,19 @@ onBeforeMount(async () => {
 
     .left_content {
       width: 100%;
-      padding-top: 4rem;
+      padding-top: 2rem;
+      color: var(--color-text);
 
-      h2 {
+      .left_title {
         // display: inline-block;
         margin-left: 2rem;
-        color: var(--color-text);
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+        //color: var(--color-text);
+        margin: {
+          top: 5px;
+          bottom: 5px;
+        }
       }
 
       .left_ul {
@@ -210,13 +254,13 @@ onBeforeMount(async () => {
 
         .left_item {
           width: 100%;
-          height: 6rem;
+          height: 7rem;
           cursor: pointer;
           display: flex;
 
           .item_left {
-            width: 5rem;
-            height: 5rem;
+            width: 6rem;
+            height: 6rem;
             margin: 0.5rem 1rem 0 2rem;
 
             img {
@@ -230,18 +274,19 @@ onBeforeMount(async () => {
           .item_right {
             width: calc(100% - 8rem);
             height: 100%;
-
             overflow: hidden;
+            //padding-top: 1.5rem;
 
             .name {
               width: 100%;
-              font-size: 1.2rem;
-              line-height: 1.2rem;
+              font-size: 1.4rem;
+              line-height: 1.4rem;
               font-weight: 600;
               overflow: hidden;
               display: block;
               text-overflow: ellipsis;
               white-space: nowrap;
+              margin-bottom: 2px;
             }
 
             .update {
@@ -273,41 +318,38 @@ onBeforeMount(async () => {
 
   .right {
     width: 79%;
+    margin-bottom: 5rem;
 
-    .playlist-main {
+    .playlist_main {
       width: 100%;
-      height: 25rem;
-      position: relative;
-      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      padding: {
+        left: 5rem;
+        right: 5rem;
+      }
 
-      .playlist-img {
-        width: 30%;
-        height: 70%;
-        float: left;
-        margin-top: 50px;
+      .playlist_img {
+        margin-top: 30px;
 
         img {
-          width: 68%;
-          height: 100%;
-          margin-left: 50px;
+          width: 25rem;
+          height: 25rem;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 16px -8px;
           border-radius: 5%;
           object-fit: cover;
         }
       }
 
-      .playlist-detail {
-        width: 60%;
-        height: 71.5%;
-        padding-top: 50px;
-        float: left;
+      .playlist_detail {
+        margin-top: 30px;
+        margin-left: 3rem;
 
         .title {
-          font-size: 1.5rem;
+          font-size: 3rem;
           color: var(--color-text);
-
-          h1 {
-            font-weight: 600;
-          }
+          line-height: 3rem;
+          font-weight: 600;
         }
 
         .data_info {
@@ -317,7 +359,7 @@ onBeforeMount(async () => {
           display: block;
 
           .data_info_item {
-            margin-bottom: 8px;
+            margin-bottom: 1rem;
             font-weight: 400;
 
             .data_info_tags {
@@ -332,13 +374,14 @@ onBeforeMount(async () => {
         }
 
         .data_actions {
-          margin-top: 10px;
           font-size: 14px;
+          margin-top: 9rem;
+          display: flex;
+          flex-direction: row;
 
           .mod_btn_green {
             border-radius: 0.8rem;
             font-size: 14px;
-            margin-right: 6px;
             padding: 0 23px;
             height: 38px;
             line-height: 38px;
@@ -374,7 +417,6 @@ onBeforeMount(async () => {
           .mod_btn {
             border-radius: 0.8rem;
             font-size: 14px;
-            margin-right: 6px;
             padding: 0 23px;
             height: 38px;
             line-height: 38px;
@@ -420,6 +462,7 @@ onBeforeMount(async () => {
     .detail_layout {
       margin: 0 auto;
       width: 100%;
+      margin-top: 3rem;
 
       li {
         list-style: none;
@@ -432,78 +475,107 @@ onBeforeMount(async () => {
         margin-left: 10px;
 
         .mod_songlist {
-          width: 95%;
+          width: 100%;
           height: 100%;
 
           .songlist__header {
             font-size: 14px;
-            position: relative;
             height: 5rem;
             width: 100%;
-            display: block;
+            display: flex;
             line-height: 50px;
+            opacity: 0.7;
+            color: var(--color-text);
 
-            li {
-              float: left;
-              opacity: 0.7;
-              color: var(--color-text);
+            .songlist__header_empty {
+              width: 2.5%;
+              height: 100%;
+              margin-left: 1rem;
             }
 
             .songlist__header_name {
-              width: 45%;
+              width: 51%;
               height: 100%;
-              display: inline-block;
-              padding-left: 5rem;
+              text-indent: 1.5rem;
             }
 
             .songlist__header_author {
-              width: 30%;
+              width: 20%;
               height: 100%;
-              display: inline-block;
             }
 
             .songlist__header_time {
-              width: 18%;
+              width: 15%;
               height: 100%;
+              text-align: center;
             }
           }
 
           .songlist__list {
             font-size: 14px;
-            height: 50px;
             width: 100%;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            color: var(--color-text);
 
             .songlist__item {
               width: 100%;
               height: 7rem;
               position: relative;
-              display: block;
+              display: flex;
               color: var(--color-text);
               border-radius: 1rem;
               overflow: hidden;
 
               .songlist__number {
                 opacity: 0.7;
-                width: 34px;
+                width: 1%;
                 height: 100%;
-                position: absolute;
                 line-height: 7rem;
                 margin-left: 1rem;
               }
 
-              .songlist__songname {
-                width: 45%;
+              .songlist_play {
+                width: 5%;
                 height: 100%;
-                font-weight: 500;
-                float: left;
-                padding-left: 45px;
-                position: relative;
+                line-height: 5rem;
+                opacity: 0;
+
+                .list_menu__item {
+                  background-color: transparent;
+                  display: block;
+                  position: relative;
+
+                  .list_menu__icon_play {
+                    background: url("@/assets/icons/播放-blue.png") no-repeat
+                      center/cover;
+                    width: 4rem;
+                    height: 4rem;
+                    display: inline-block;
+                    margin-left: 0.5rem;
+                    margin-top: 1.5rem;
+
+                    &:active {
+                      transform: scale(0.95);
+                    }
+                  }
+                  &:hover {
+                    transform: scale(1.03);
+                  }
+                }
+              }
+
+              .songlist__songname {
+                width: 51%;
+                height: 100%;
+                display: flex;
+                font-size: 1.6rem;
+                font-weight: 600;
+                user-select: none;
 
                 .song_icon {
                   width: 6rem;
                   height: 6rem;
-                  float: left;
                   margin-right: 1.5rem;
                   border-radius: 5px;
                   object-fit: cover;
@@ -511,78 +583,20 @@ onBeforeMount(async () => {
                 }
 
                 .songlist__songname_txt {
-                  max-width: 40%;
                   height: 100%;
                   box-sizing: border-box;
-                  float: left;
                   overflow: hidden;
                   text-overflow: ellipsis;
-
                   margin-right: 8px;
                   white-space: nowrap;
-                  font-size: 14px;
                   display: block;
                   line-height: 7rem;
-                }
-
-                .mod_list_menu {
-                  width: 50%;
-                  height: 100%;
-                  margin-left: 200px;
-                  opacity: 0;
-                  position: absolute;
-                  top: 1.3rem;
-                  right: 0;
-                  z-index: 10;
-
-                  .list_menu__item {
-                    width: 4rem;
-                    height: 4rem;
-                    background-color: transparent;
-                    display: block;
-                    position: relative;
-                    margin-left: 10rem;
-                    padding-top: 2.5px;
-                    float: left;
-
-                    .list_menu__icon_play {
-                      background: url("@/assets/icons/播放-blue.png") no-repeat center/cover;
-                      width: 4rem;
-                      height: 4rem;
-                      display: inline-block;
-
-                      &:active {
-                        transform: scale(0.95);
-                      }
-                    }
-
-                    .list_menu__icon_add {
-                      background: url("@/assets/icons/添加-blue.png") no-repeat center/cover;
-                      width: 4rem;
-                      height: 4rem;
-                      display: inline-block;
-
-                      &:active {
-                        transform: scale(0.95);
-                      }
-                    }
-
-                    &:hover {
-                      transform: scale(1.05);
-                    }
-                  }
-
-                  .list_menu__add {
-                    margin-left: 10px;
-                  }
                 }
               }
 
               .songlist__artist {
-                width: 30%;
+                width: 20%;
                 height: 100%;
-                float: left;
-                margin-left: -1px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -590,12 +604,36 @@ onBeforeMount(async () => {
               }
 
               .songlist__time {
-                width: 1%;
+                width: 15%;
                 height: 100%;
-                float: left;
-                opacity: 0.7;
-                margin-left: 0.5rem;
+                text-align: center;
                 line-height: 7rem;
+              }
+              .songlist_add {
+                width: 5%;
+                height: 100%;
+                line-height: 7rem;
+                opacity: 0;
+                .list_menu__item {
+                  background-color: transparent;
+                  display: block;
+                  .list_menu__icon_add {
+                    background: url("@/assets/icons/添加-blue.png") no-repeat
+                      center/cover;
+                    width: 4rem;
+                    height: 4rem;
+                    display: inline-block;
+                    margin-top: 1.5rem;
+
+                    &:active {
+                      transform: scale(0.95);
+                    }
+                  }
+
+                  &:hover {
+                    transform: scale(1.05);
+                  }
+                }
               }
 
               a {
@@ -610,7 +648,8 @@ onBeforeMount(async () => {
               &:hover {
                 background-color: var(--color-secondary-bg-for-transparent);
 
-                .mod_list_menu {
+                .songlist_add,
+                .songlist_play {
                   opacity: 1;
                 }
               }
@@ -663,6 +702,18 @@ onBeforeMount(async () => {
         }
       }
     }
+  }
+}
+
+@media (max-width: 1336px) {
+  .topList_container {
+    padding: 0 5vw;
+  }
+}
+
+@media (max-width: 1500px) {
+  .topList_container {
+    min-width: 1492px;
   }
 }
 </style>

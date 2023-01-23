@@ -1,18 +1,38 @@
 <template>
-  <div class="categorie-container">
-    <div class="head" :class="{ active: store.state.cat === '全部' }" @click="updateCat('全部')">
+  <div class="categorie_container">
+    <div
+      class="head"
+      :class="{ active: store.state.cat === '全部' }"
+      @click="updateCat('全部')"
+    >
       全部
     </div>
-    <div class="open-btn" @click="isOpen = !isOpen" :class="{ active: isOpen === true }">
+    <div
+      class="open_btn"
+      @click="isOpen = !isOpen"
+      :class="{ active: isOpen === true }"
+    >
       ...
     </div>
     <div class="panel" v-if="isOpen">
-      <div class="categorie-content" v-for="(item, index) in categories" :key="index">
+      <div
+        class="categorie_content"
+        v-for="(item, index) in categories"
+        :key="index"
+      >
         <div class="categories">{{ item }}</div>
-        <div class="categories-list">
-          <div class="item" v-for="(item, index2) in findItem(index)" :key="index2">
-            <a class="item_name" :class="{ active: store.state.cat === `${item.name}` }"
-              @click="updateCat(`${item.name}`)">{{ item.name }}</a>
+        <div class="categories_list">
+          <div
+            class="item"
+            v-for="(item, index2) in findItem(index)"
+            :key="index2"
+          >
+            <a
+              class="item_name"
+              :class="{ active: store.state.cat === `${item.name}` }"
+              @click="updateCat(`${item.name}`)"
+              >{{ item.name }}</a
+            >
           </div>
         </div>
       </div>
@@ -29,18 +49,18 @@ import { getPlayListCategory } from "@/api/PlayList";
 import { useStore } from "vuex";
 
 interface Categorie {
-  all: object
-  categories: Categories
-  code: number
-  sub: CategorieInfo[]
+  all: object;
+  categories: Categories;
+  code: number;
+  sub: CategorieInfo[];
 }
 
 interface Categories {
-  '0': string;
-  '1': string;
-  '2': string;
-  '3': string;
-  '4': string;
+  "0": string;
+  "1": string;
+  "2": string;
+  "3": string;
+  "4": string;
 }
 
 const store = useStore();
@@ -58,7 +78,7 @@ const findItem = (index: any): CategorieInfo[] => {
 };
 
 const getCategories = async () => {
-  let res = await getPlayListCategory() as unknown as Categorie;
+  let res = (await getPlayListCategory()) as unknown as Categorie;
   categories.value = res.categories;
   categorieItems.value = res.sub;
 };
@@ -75,22 +95,15 @@ onBeforeMount(async () => {
 
 <style scoped lang="scss">
 @media (max-width: 1500px) {
-  .categorie-container {
-    min-width: 1487px;
+  .categorie_container {
+    min-width: 1492px;
   }
 }
 
-.categorie-container {
-  //height: 600px;
-  width: 77.5%;
-  // padding: {
-  //   right: 15vw;
-  //   left: 13vw;
-  // }
+.categorie_container {
   padding-top: 40px;
   position: relative;
-  margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 5rem;
 
   .head {
     width: 7rem;
@@ -116,7 +129,7 @@ onBeforeMount(async () => {
     }
   }
 
-  .open-btn {
+  .open_btn {
     width: 7rem;
     height: 5rem;
     background-color: var(--color-secondary-bg);
@@ -154,7 +167,7 @@ onBeforeMount(async () => {
     background-color: var(--color-secondary-bg);
     color: var(--color-text);
 
-    .categorie-content {
+    .categorie_content {
       display: flex;
       margin-bottom: 32px;
 
@@ -167,7 +180,7 @@ onBeforeMount(async () => {
         height: 26px;
       }
 
-      .categories-list {
+      .categories_list {
         margin-left: 24px;
         display: flex;
         flex-wrap: wrap;
@@ -187,7 +200,7 @@ onBeforeMount(async () => {
             text-align: center;
             text-decoration: none;
             border-radius: 10px;
-            padding: 5px;
+            padding: 10px;
 
             &:hover {
               background-color: var(--color-primary-bg);

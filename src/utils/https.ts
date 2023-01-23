@@ -20,6 +20,8 @@ service.interceptors.request.use((config: AxiosRequestConfig) => {
 
     //nprogress.start()
     return config
+}, err => {
+    return Promise.reject(err)
 })
 
 service.interceptors.response.use((res: AxiosResponse) => {

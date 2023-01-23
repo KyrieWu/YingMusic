@@ -183,7 +183,7 @@ import { onBeforeMount, watch, computed, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import SquareItemList from "@/components/SquareItemList.vue";
 import MVItem, { MVProps } from "@/components/MVItem.vue";
-import AritstItem from "@/components/AritstItem.vue";
+import AritstItem from "@/components/RoundItem.vue";
 import { timestampToTime } from "@/utils/utils";
 import Blankprompt from "@/components/Blankprompt.vue";
 
