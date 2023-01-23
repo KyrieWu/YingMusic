@@ -1,10 +1,10 @@
 <template>
-  <div class="playlist-container">
-    <div class="playlist-main">
-      <div class="playlist-img">
-        <img :src="playListData.coverImgUrl" alt="" />
+  <div class="playlistDetail_container">
+    <div class="playlist_main">
+      <div class="playlist_img">
+        <img :src="getImageUrl(playListData)" alt="" />
       </div>
-      <div class="playlist-detail">
+      <div class="playlist_detail">
         <div class="title">
           <h1>{{ playListData.name }}</h1>
         </div>
@@ -39,6 +39,10 @@
             </div>
           </li>
         </ul>
+        <div class="mod_about">
+          <h3 class="about_tit">简介:</h3>
+          <div class="about_cont">{{ playListData.description }}</div>
+        </div>
         <div class="data_actions">
           <a class="mod_btn_green" @click="playAllSong(trackInfos)">
             <i class="mod_btn_green__icon_play"></i>
@@ -48,10 +52,6 @@
             <i class="mod_btn__icon_like" ref="mod_btn__icon_like"></i>
             <span>收藏</span>
           </a>
-          <a href="" class="mod_btn">
-            <i class="mod_btn__icon_commend"></i>
-            <span>评论</span>
-          </a>
         </div>
       </div>
     </div>
@@ -59,6 +59,7 @@
       <div class="detail_layout__main">
         <div class="mod_songlist">
           <ul class="songlist__header">
+            <li class="songlist__header_empty"></li>
             <li class="songlist__header_name">歌曲</li>
             <li class="songlist__header_author">歌手</li>
             <li class="songlist__header_album">专辑</li>
@@ -66,9 +67,18 @@
           </ul>
           <ul class="songlist__list">
             <li v-for="(item, index) in trackInfos" :key="item.id">
-              <div class="songlist__item songlist__item--even">
-                <div class="songlist__number songlist__number--top">
+              <div class="songlist__item">
+                <div class="songlist__number">
                   {{ index + 1 }}
+                </div>
+                <div class="songlist__play">
+                  <a
+                    class="list_menu__item list_menu__play"
+                    :title="$t('songItem.play')"
+                    @click="playSong(item)"
+                  >
+                    <i class="list_menu__icon_play"></i>
+                  </a>
                 </div>
                 <div class="songlist__songname">
                   <span class="songlist__songname_txt"
@@ -76,19 +86,6 @@
                       item.name
                     }}</a></span
                   >
-
-                  <div class="mod_list_menu">
-                    <a
-                      class="list_menu__item list_menu__play"
-                      :title="$t('songItem.play')"
-                      @click="playSong(item)"
-                      ><i class="list_menu__icon_play"></i></a
-                    ><a
-                      class="list_menu__item list_menu__add"
-                      :title="$t('songItem.add')"
-                      ><i class="list_menu__icon_add"></i
-                    ></a>
-                  </div>
                 </div>
                 <div class="songlist__artist">
                   <router-link
@@ -109,25 +106,18 @@
                   >
                 </div>
                 <div class="songlist__time">{{ timestampToTime(item.dt) }}</div>
+                <div class="songlist__add">
+                  <a
+                    class="list_menu__item list_menu__add"
+                    :title="$t('songItem.add')"
+                    @click="addToPlaylist(item)"
+                  >
+                    <i class="list_menu__icon_add"></i>
+                  </a>
+                </div>
               </div>
             </li>
           </ul>
-        </div>
-      </div>
-      <div class="detail_layout_other">
-        <div class="mod_about">
-          <h3 class="about_tit">简介</h3>
-          <div
-            class="about_cont"
-            :class="{ about_cont_up: isPackUp }"
-            ref="about_cont"
-          >
-            {{ playListData.description }}
-          </div>
-          <a class="about_more" v-if="isPackUp" @click="packDown"
-            >展开&#8595;</a
-          >
-          <a class="pack_up" v-if="!isPackUp" @click="packUp">收起&#8593;</a>
         </div>
       </div>
     </div>
@@ -201,6 +191,10 @@ const playSong = (item: SongInfo): void => {
 
 const playAllSong = (songs: SongInfo[]): void => {
   store.commit("UPDATEPLAYLIST", songs);
+};
+
+const addToPlaylist = (song: SongInfo) => {
+  store.commit("ADDTOPLAYLIST", song);
 };
 
 const getsongLists = async (id: number) => {
@@ -294,12 +288,17 @@ const toLikeplaylist = async () => {
     }
   }
 };
+
+const getImageUrl = (item: any) => {
+  let img = item.img1v1Url || item.picUrl || item.coverImgUrl;
+  return `${img?.replace("http://", "https://")}?param=512y512`;
+};
 </script>
 
 <style scoped lang="scss">
 @media (max-width: 1500px) {
-  .playlist-container {
-    min-width: 1487px;
+  .playlistDetail_container {
+    min-width: 1492px;
   }
 
   .playlist-img,
@@ -318,48 +317,52 @@ const toLikeplaylist = async () => {
   }
 }
 
-.playlist-container {
+.playlistDetail_container {
   margin-top: 64px;
 
-  .playlist-main {
-    width: 75%;
-    height: 35rem;
-    position: relative;
-    margin: 0 auto;
+  padding: {
+    top: 2rem;
+    left: 10vw;
+    right: 10vw;
+    bottom: 10rem;
+  }
 
-    .playlist-img {
-      width: 30%;
-      height: 78%;
-      float: left;
-      margin-top: 50px;
+  .playlist_main {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+
+    .playlist_img {
+      margin-top: 18px;
 
       img {
-        width: 70%;
-        height: 100%;
-        margin-left: 50px;
+        width: 30rem;
+        height: 30rem;
+        display: block;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 16px -8px;
         border-radius: 5%;
         object-fit: cover;
       }
     }
 
-    .playlist-detail {
-      width: 60%;
-      height: 71.5%;
-      padding-top: 50px;
-      float: left;
+    .playlist_detail {
+      //padding-top: 28px;
+      margin-left: 3rem;
 
       .title {
-        font-size: 1.5rem;
+        margin-left: 1rem;
+        font-size: 2rem;
+        line-height: 2rem;
         color: var(--color-text);
 
-        h1 {
-          font-weight: 600;
-        }
+        font-weight: 600;
       }
 
       .art {
         font-size: 18px;
         color: var(--color-text);
+        //margin-bottom: 3rem;
 
         .icon_singer {
           display: block;
@@ -367,7 +370,8 @@ const toLikeplaylist = async () => {
           height: 18px;
           background: url(@/assets/icons/作者.png) no-repeat center/cover;
           float: left;
-          margin-top: 3px;
+          //margin-top: 3px;
+          margin-left: 10px;
           margin-right: 10px;
         }
 
@@ -385,6 +389,9 @@ const toLikeplaylist = async () => {
         padding: 0;
         font-size: 14px;
         display: block;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        color: var(--color-text);
 
         .data_info_item {
           margin-bottom: 8px;
@@ -401,9 +408,38 @@ const toLikeplaylist = async () => {
         }
       }
 
+      .mod_about {
+        margin-top: 2rem;
+        margin-left: 10px;
+        color: var(--color-text);
+
+        .about_tit {
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+
+        .about_cont {
+          height: 5rem;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          font-size: 14px;
+          opacity: 0.68;
+          margin-top: 10px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          overflow: hidden;
+          cursor: pointer;
+          white-space: pre-line;
+        }
+      }
+
       .data_actions {
-        margin-top: 10px;
         font-size: 14px;
+        margin-left: 10px;
+        margin-top: 3rem;
 
         .mod_btn_green {
           border-radius: 0.8rem;
@@ -488,43 +524,41 @@ const toLikeplaylist = async () => {
   }
 
   .detail_layout {
-    width: 75%;
-    height: 70rem;
-    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 3rem;
 
     li {
       list-style: none;
     }
 
     .detail_layout__main {
-      float: left;
-      width: 70%;
-      height: 100%;
-      margin-left: 10px;
+      //float: left;
+      width: 100%;
 
       .mod_songlist {
-        width: 95%;
+        width: 100%;
         height: 100%;
 
         .songlist__header {
-          font-size: 14px;
-          position: relative;
+          font-size: 1.4rem;
+          display: flex;
+          flex-direction: row;
           height: 5rem;
           width: 100%;
-          display: block;
           line-height: 50px;
+          color: var(--color-text);
 
-          li {
-            float: left;
-            opacity: 0.7;
-            color: var(--color-text);
+          .songlist__header_empty {
+            width: 6%;
+            height: 100%;
+            margin-left: 1rem;
           }
-
           .songlist__header_name {
-            width: 45%;
+            width: 39%;
             height: 100%;
             display: inline-block;
-            padding-left: 45px;
           }
 
           .songlist__header_author {
@@ -534,20 +568,20 @@ const toLikeplaylist = async () => {
           }
 
           .songlist__header_album {
-            width: 18%;
+            width: 17%;
             height: 100%;
             display: inline-block;
           }
 
           .songlist__header_time {
-            width: 8%;
+            width: 15%;
             height: 100%;
+            text-align: end;
           }
         }
 
         .songlist__list {
-          font-size: 14px;
-          height: 50px;
+          font-size: 1.4rem;
           width: 100%;
           display: block;
 
@@ -555,7 +589,7 @@ const toLikeplaylist = async () => {
             width: 100%;
             height: 5rem;
             position: relative;
-            display: block;
+            display: flex;
             line-height: 50px;
             color: var(--color-text);
             overflow: hidden;
@@ -563,19 +597,48 @@ const toLikeplaylist = async () => {
 
             .songlist__number {
               opacity: 0.7;
-              width: 34px;
+              width: 1%;
               height: 100%;
-              position: absolute;
               margin-left: 1rem;
+            }
+            .songlist__play {
+              width: 5%;
+              height: 100%;
+              opacity: 0;
+
+              .list_menu__item {
+                width: 4rem;
+                height: 4rem;
+                background-color: transparent;
+                display: block;
+
+                .list_menu__icon_play {
+                  background: url("@/assets/icons/播放-blue.png") no-repeat
+                    center/cover;
+                  width: 4rem;
+                  height: 4rem;
+                  display: inline-block;
+                  margin-top: 0.5rem;
+                  margin-left: 1.5rem;
+
+                  &:active {
+                    transform: scale(0.95);
+                  }
+                }
+
+                &:hover {
+                  transform: scale(1.05);
+                }
+              }
             }
 
             .songlist__songname {
-              width: 45%;
+              width: 39%;
               height: 100%;
-              font-weight: 500;
-              float: left;
-              padding-left: 45px;
               position: relative;
+              font-size: 1.8rem;
+              font-weight: 600;
+              user-select: none;
 
               .songlist__songname_txt {
                 max-width: 72%;
@@ -589,66 +652,11 @@ const toLikeplaylist = async () => {
                 font-size: 14px;
                 display: block;
               }
-
-              .mod_list_menu {
-                width: 50%;
-                height: 100%;
-                margin-left: 200px;
-                opacity: 0;
-                z-index: 100;
-                position: absolute;
-                //right: -5rem;
-
-                .list_menu__item {
-                  width: 4rem;
-                  height: 4rem;
-                  background-color: transparent;
-                  display: block;
-                  position: relative;
-                  margin-left: 8rem;
-                  margin-top: 5px;
-                  float: left;
-
-                  .list_menu__icon_play {
-                    background: url("@/assets/icons/播放-blue.png") no-repeat
-                      center/cover;
-                    width: 4rem;
-                    height: 4rem;
-                    display: inline-block;
-
-                    &:active {
-                      transform: scale(0.95);
-                    }
-                  }
-
-                  .list_menu__icon_add {
-                    background: url("@/assets/icons/添加-blue.png") no-repeat
-                      center/cover;
-                    width: 4rem;
-                    height: 4rem;
-                    display: inline-block;
-
-                    &:active {
-                      transform: scale(0.95);
-                    }
-                  }
-
-                  &:hover {
-                    transform: scale(1.05);
-                  }
-                }
-
-                .list_menu__add {
-                  margin-left: 10px;
-                }
-              }
             }
 
             .songlist__artist {
               width: 18%;
               height: 100%;
-              float: left;
-              margin-left: -1px;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
@@ -657,18 +665,48 @@ const toLikeplaylist = async () => {
             .songlist__album {
               width: 17%;
               height: 100%;
-              float: left;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
 
             .songlist__time {
-              width: 11%;
+              width: 15%;
               height: 100%;
-              float: left;
               opacity: 0.7;
-              margin-left: 10px;
+              text-align: end;
+            }
+
+            .songlist__add {
+              width: 4%;
+              height: 100%;
+              opacity: 0;
+
+              .list_menu__item {
+                width: 4rem;
+                height: 4rem;
+                background-color: transparent;
+                display: block;
+                position: relative;
+
+                .list_menu__icon_add {
+                  background: url("@/assets/icons/添加-blue.png") no-repeat
+                    center/cover;
+                  width: 4rem;
+                  height: 4rem;
+                  display: inline-block;
+                  margin-top: 0.5rem;
+                  margin-left: 1rem;
+
+                  &:active {
+                    transform: scale(0.95);
+                  }
+                }
+
+                &:hover {
+                  transform: scale(1.05);
+                }
+              }
             }
 
             a {
@@ -683,7 +721,8 @@ const toLikeplaylist = async () => {
             &:hover {
               background-color: var(--color-secondary-bg-for-transparent);
 
-              .mod_list_menu {
+              .songlist__add,
+              .songlist__play {
                 opacity: 1;
               }
             }
@@ -691,61 +730,18 @@ const toLikeplaylist = async () => {
         }
       }
     }
-
-    .detail_layout_other {
-      font-size: 14px;
-      width: 27%;
-      float: left;
-      color: var(--color-text);
-      line-height: 21px;
-      margin-left: 5px;
-
-      .about_cont {
-        // height: 80px;
-        width: 100%;
-        overflow: hidden;
-        white-space: normal;
-        text-overflow: ellipsis;
-        display: --webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-      }
-
-      .about_cont_up {
-        height: 80px;
-      }
-
-      .about_more {
-        display: block;
-        margin-top: 15px;
-
-        &:hover {
-          color: var(--color-primary);
-          text-decoration: none;
-        }
-      }
-
-      .pack_up {
-        display: block;
-        margin-top: 15px;
-
-        &:hover {
-          color: var(--color-primary);
-          text-decoration: none;
-        }
-      }
-    }
   }
 
   .related_playlist {
-    width: 75%;
-    margin: 0 auto;
+    width: 100%;
+    margin-top: 5rem;
 
     .title {
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: 600;
       color: var(--color-text);
-      margin-left: 4rem;
+      margin-left: 1rem;
+      margin-bottom: 2.5rem;
     }
   }
 }
