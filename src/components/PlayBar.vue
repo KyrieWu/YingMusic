@@ -18,19 +18,26 @@
       <div class="middle_top">
         <div class="play_name">
           {{ store.state.playList[playindex]?.name }}-{{
-              store.state.playList[playindex]?.ar[0].name
+            store.state.playList[playindex]?.ar[0].name
           }}
         </div>
         <div class="play_time">
           <span>
             {{ _currenttime }}&nbsp;/&nbsp;{{
-                timestampToTime(store.state.playList[playindex]?.dt)
+              timestampToTime(store.state.playList[playindex]?.dt)
             }}
           </span>
         </div>
       </div>
       <div class="nprogress">
-        <input type="range" class="range" min="0" :max="duration" v-model="currenttime" step="0.05" />
+        <input
+          type="range"
+          class="range"
+          min="0"
+          :max="duration"
+          v-model="currenttime"
+          step="0.05"
+        />
       </div>
     </div>
     <div class="right">
@@ -41,8 +48,20 @@
         <img src="@/assets/icons/list.svg" alt="" @click="ShowPlaylist" />
       </div>
       <div class="volume">
-        <img ref="volume_icon" class="volume_icon" src="@/assets/icons/volume.svg" @click="goMute" />
-        <input type="range" class="volume_range" min="0" max="1" step="0.01" v-model="volumeRange" />
+        <img
+          ref="volume_icon"
+          class="volume_icon"
+          src="@/assets/icons/volume.svg"
+          @click="goMute"
+        />
+        <input
+          type="range"
+          class="volume_range"
+          min="0"
+          max="1"
+          step="0.01"
+          v-model="volumeRange"
+        />
       </div>
     </div>
     <div class="updn">
@@ -55,7 +74,9 @@
         <img :src="store.state.playList[playindex]?.al.picUrl" alt="" />
       </div>
       <div class="playList_top">
-        <span class="top_play_list">播放列表({{ store.state.playList.length }})</span>
+        <span class="top_play_list"
+          >播放列表({{ store.state.playList.length }})</span
+        >
         <div class="deletelist" @click="deletePlaylist">
           <i class="delete_icon"></i>
           <span class="delete_title">清空列表</span>
@@ -79,23 +100,39 @@
                   {{ index + 1 }}
                 </div>
                 <div class="songlist__songname">
-                  <span class="songlist__songname_txt"><a :title="item.name" @click="toSongDetail(item)">{{
+                  <span class="songlist__songname_txt"
+                    ><a :title="item.name" @click="toSongDetail(item)">{{
                       item.name
-                  }}</a></span>
+                    }}</a></span
+                  >
 
                   <div class="mod_list_menu">
-                    <a class="list_menu__item list_menu__play" title="播放" @click="playSong(item)"><i
-                        class="list_menu__icon_play"></i></a><a class="list_menu__item list_menu__add" title="添加到歌单"><i
-                        class="list_menu__icon_add"></i></a>
-                    <a class="list_menu__item list_menu__delete" title="从歌单中删除" @click="deleteSong(item)"><i
-                        class="list_menu__icon_delete"></i></a>
+                    <a
+                      class="list_menu__item list_menu__play"
+                      title="播放"
+                      @click="playSong(item)"
+                      ><i class="list_menu__icon_play"></i></a
+                    ><a
+                      class="list_menu__item list_menu__add"
+                      title="添加到歌单"
+                      ><i class="list_menu__icon_add"></i
+                    ></a>
+                    <a
+                      class="list_menu__item list_menu__delete"
+                      title="从歌单中删除"
+                      @click="deleteSong(item)"
+                      ><i class="list_menu__icon_delete"></i
+                    ></a>
                   </div>
                 </div>
                 <div class="songlist__album">
-                  <router-link :to="{
-                    path: '/artistDetail',
-                    query: { id: item.ar[0].id },
-                  }">{{ item.ar[0].name }}</router-link>
+                  <router-link
+                    :to="{
+                      path: '/artistDetail',
+                      query: { id: item.ar[0].id },
+                    }"
+                    >{{ item.ar[0].name }}</router-link
+                  >
                 </div>
                 <div class="songlist__time">{{ timestampToTime(item.dt) }}</div>
               </div>
@@ -108,19 +145,25 @@
           <img :src="`${store.state.playList[playindex]?.al.picUrl}`" alt="" />
         </div>
         <div class="lyric" ref="lyric_content">
-          <p v-for="item in lyric" :key="item" :class="{
-            lyricActive:
-              (currenttime * 1000 >= item.time &&
-                currenttime * 1000 < item.pre) ||
-              (currenttime * 1000 >= item.time && item.pre == 0),
-          }">
+          <p
+            v-for="item in lyric"
+            :key="item"
+            :class="{
+              lyricActive:
+                (currenttime * 1000 >= item.time &&
+                  currenttime * 1000 < item.pre) ||
+                (currenttime * 1000 >= item.time && item.pre == 0),
+            }"
+          >
             {{ item.lrc }}
           </p>
         </div>
       </div>
     </div>
-    <audio ref="player"
-      :src="`https://music.163.com/song/media/outer/url?id=${store.getters.getCurrentSongId}.mp3`"></audio>
+    <audio
+      ref="player"
+      :src="`https://music.163.com/song/media/outer/url?id=${store.getters.getCurrentSongId}.mp3`"
+    ></audio>
   </footer>
 </template>
 
@@ -354,7 +397,7 @@ footer {
   left: 0;
   right: 0;
   height: 64px;
-  width: 85vw;
+  //width: 85vw;
   backdrop-filter: saturate(180%) blur(20px);
   background-color: var(--color-navbar-bg);
   z-index: 100;
@@ -363,8 +406,8 @@ footer {
   align-items: center;
 
   padding: {
-    right: 12vw;
-    left: 12vw;
+    right: 10vw;
+    left: 10vw;
   }
 
   .left {
@@ -872,7 +915,8 @@ footer {
                   background: transparent;
 
                   .list_menu__icon_play {
-                    background: url("@/assets/icons/播放-blue.png") no-repeat center/cover;
+                    background: url("@/assets/icons/播放-blue.png") no-repeat
+                      center/cover;
                     width: 40px;
                     height: 40px;
                     display: inline-block;
@@ -883,7 +927,8 @@ footer {
                   }
 
                   .list_menu__icon_add {
-                    background: url("@/assets/icons/添加-blue.png") no-repeat center/cover;
+                    background: url("@/assets/icons/添加-blue.png") no-repeat
+                      center/cover;
                     width: 39px;
                     height: 39px;
                     display: inline-block;
@@ -894,7 +939,8 @@ footer {
                   }
 
                   .list_menu__icon_delete {
-                    background: url("@/assets/icons/删除-blue.png") no-repeat center/cover;
+                    background: url("@/assets/icons/删除-blue.png") no-repeat
+                      center/cover;
                     width: 39px;
                     height: 39px;
                     display: inline-block;
